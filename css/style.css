@@ -443,6 +443,7 @@ body::after {
 }
 
 .popup-checkbox {
+  outline: none;
   flex: 0 0 16px;
   width: 16px !important;
   height: 16px !important;
@@ -1354,6 +1355,19 @@ body::after {
   background: url("../img/arrow-shape.png") 50% 50%/cover no-repeat;
   transition: all 0.3s ease-in-out;
 }
+.business__image {
+  opacity: 0.5;
+  width: 100%;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+}
+.business__image img {
+  width: 150px;
+  height: 150px;
+}
 .business__card {
   transition: all 0.3s ease-in-out;
   cursor: pointer;
@@ -1368,26 +1382,23 @@ body::after {
   max-width: 18.0625rem;
   min-width: 13.125rem;
   background: #1b1b1b;
-  padding: 3.125rem 1.5625rem 1.5625rem 1.5625rem;
+  padding: 0rem 1.25rem 1.25rem 1.25rem;
 }
 .business__card > img,
 .business__card picture {
   max-width: 100%;
 }
-.business__card:hover {
-  background: rgba(0, 0, 0, 0.85);
-}
 .business__card:hover .arrow-shape {
   background: url("../img/arrow-shap-white.png") 50% 50%/cover no-repeat;
 }
-.business__image {
-  flex: 1 1 auto;
+.business__card:hover .business__image {
+  opacity: 1;
 }
 .business__description {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 160%;
   display: flex;
   align-items: flex-end;
@@ -1410,6 +1421,7 @@ body::after {
 .business__left {
   position: relative;
   cursor: pointer;
+  transform: rotate(180deg);
 }
 .business__right {
   cursor: pointer;
@@ -1483,6 +1495,7 @@ body::after {
 .case__left {
   position: relative;
   cursor: pointer;
+  transform: rotate(180deg);
 }
 .case__right {
   cursor: pointer;
@@ -1623,10 +1636,11 @@ body::after {
 .team__left {
   position: relative;
   cursor: pointer;
+  transform: rotate(180deg);
 }
 .team__right {
-  position: relative;
   cursor: pointer;
+  position: relative;
   transform: rotate(180deg);
 }
 
