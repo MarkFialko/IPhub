@@ -375,8 +375,8 @@ body::after {
   border-radius: 8px;
   max-width: 23.75rem;
   outline: none;
-  height: 7.5rem;
-  min-height: 7.5rem;
+  height: 5.625rem;
+  min-height: 5.625rem;
   padding: 0.9375rem;
   font-family: "Montserrat";
   font-style: normal;
@@ -1759,15 +1759,20 @@ body::after {
 .info-forum__image {
   cursor: pointer;
   display: flex;
-  padding: 0.3125rem;
   align-items: center;
   justify-content: center;
+  flex: 0 0 100px;
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
 }
 .info-forum__image > img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
   max-width: 100%;
   border-radius: 50%;
 }
