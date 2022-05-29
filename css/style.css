@@ -952,7 +952,7 @@ body::after {
     display: none;
   }
 }
-.ip__image img {
+.ip__image img, .ip__image picture {
   max-width: 100%;
 }
 
@@ -1112,7 +1112,7 @@ body::after {
 .experience__image {
   width: 20rem;
 }
-.experience__image img {
+.experience__image img, .experience__image picture {
   max-width: 100%;
 }
 @media (max-width: 61.99875em) {
@@ -1284,7 +1284,7 @@ body::after {
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
-.card-experience-practice > img {
+.card-experience-practice > img, .card-experience-practice picture {
   max-width: 100%;
 }
 .card-experience-practice:hover {
@@ -1364,7 +1364,7 @@ body::after {
   background: #1b1b1b;
   padding: 3.125rem 1.5625rem 1.5625rem 1.5625rem;
 }
-.business__card > img {
+.business__card > img, .business__card picture {
   max-width: 100%;
 }
 .business__card:hover {
@@ -1513,7 +1513,7 @@ body::after {
     width: 100%;
   }
 }
-.card-case__left > img {
+.card-case__left > img, .card-case__left picture {
   padding: 0.9375rem;
   max-width: 100%;
 }
@@ -1767,7 +1767,7 @@ body::after {
   border-radius: 50%;
   object-fit: cover;
 }
-.info-forum__image > img {
+.info-forum__image > img, .info-forum__image picture {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1970,11 +1970,11 @@ body::after {
     display: none;
   }
 }
-.request__image img {
+.request__image img, .request__image picture {
   max-width: 100%;
 }
 @media (max-width: 50em) {
-  .request__image img {
+  .request__image img, .request__image picture {
     max-width: 210px;
   }
 }
@@ -1992,12 +1992,12 @@ body::after {
   top: 0;
   right: 0;
 }
-.know__ball img {
+.know__ball img, .know__ball picture {
   width: 180px;
   height: 180px;
 }
 @media (max-width: 61.99875em) {
-  .know__ball img {
+  .know__ball img, .know__ball picture {
     width: 180px;
     height: 180px;
   }
@@ -2006,7 +2006,7 @@ body::after {
   .know__ball {
     transform: translate(0, -95px);
   }
-  .know__ball img {
+  .know__ball img, .know__ball picture {
     width: 120px;
     height: 120px;
   }
