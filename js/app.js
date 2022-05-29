@@ -3751,6 +3751,14 @@
     const da = new DynamicAdapt("max");
     da.init();
     const script_form = Array.from(document.querySelector("form"));
+    script_form.forEach((input => {
+        input.addEventListener("onsubmit", (e => {
+            e.preventDefault();
+        }));
+        input.addEventListener("submit", (e => {
+            e.preventDefault();
+        }));
+    }));
     const requiredForm = script_form.filter((input => input.closest("[required]")));
     const showInputError = reqInput => {
         const errorSpan = reqInput.nextSibling.nextSibling;
