@@ -314,14 +314,16 @@ body::after {
   align-items: center;
   max-width: 768px;
   justify-content: center;
-  padding: 1.875rem 1.25rem;
+  padding: 1.25rem;
+  max-width: 31.875rem;
 }
 
 .popup-form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.875rem;
+  gap: 1.5625rem;
+  max-width: 23.75rem;
 }
 
 .form-popup__title {
@@ -334,7 +336,7 @@ body::after {
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  margin: 0rem 0rem 0.625rem 0rem;
+  margin: 0rem 0rem 0.3125rem 0rem;
 }
 
 .form-popup__subtitle {
@@ -345,10 +347,11 @@ body::after {
   line-height: 160%;
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
   color: #8a8a8a;
   max-width: 23.75rem;
-  margin: 0rem 0rem 1.875rem 0rem;
+  margin: 0rem 0rem 1.25rem 0rem;
 }
 
 .form-group-checkbox {
@@ -375,8 +378,8 @@ body::after {
   border-radius: 8px;
   max-width: 23.75rem;
   outline: none;
-  height: 7.5rem;
-  min-height: 7.5rem;
+  height: 5.625rem;
+  min-height: 5.625rem;
   padding: 0.9375rem;
   font-family: "Montserrat";
   font-style: normal;
@@ -435,11 +438,12 @@ body::after {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
+  margin: -30px auto 0 auto;
   width: 8.4375rem;
 }
 
 .popup-checkbox {
+  outline: none;
   flex: 0 0 16px;
   width: 16px !important;
   height: 16px !important;
@@ -926,6 +930,11 @@ body::after {
   background-color: #000000;
   padding: 4.375rem 0rem 1.875rem 0rem;
 }
+@media (max-width: 29.99875em) {
+  .ip {
+    padding: 1.875rem 0rem 0rem 0rem;
+  }
+}
 .ip__title {
   font-family: "Montserrat";
   font-style: normal;
@@ -952,7 +961,8 @@ body::after {
     display: none;
   }
 }
-.ip__image img {
+.ip__image img,
+.ip__image picture {
   max-width: 100%;
 }
 
@@ -1085,14 +1095,18 @@ body::after {
 .link-arr {
   transition: 0.3s ease-in-out;
   opacity: 0;
-  background: url("../img/round-arrow.png") no-repeat;
+  background: url("../img/arrow.svg") no-repeat;
   transform: translateY(-50%) rotate(180deg);
   flex: 0 0 42px;
   position: absolute;
   top: 50%;
-  right: -25px;
+  right: -20px;
   width: 42px;
   height: 10px;
+}
+.link-arr-rev {
+  transform: rotate(0deg) translateY(-50%);
+  left: -20px;
 }
 
 .experience {
@@ -1112,7 +1126,8 @@ body::after {
 .experience__image {
   width: 20rem;
 }
-.experience__image img {
+.experience__image img,
+.experience__image picture {
   max-width: 100%;
 }
 @media (max-width: 61.99875em) {
@@ -1284,7 +1299,8 @@ body::after {
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
-.card-experience-practice > img {
+.card-experience-practice > img,
+.card-experience-practice picture {
   max-width: 100%;
 }
 .card-experience-practice:hover {
@@ -1346,10 +1362,37 @@ body::after {
   width: 18px;
   height: 18px;
   background: url("../img/arrow-shape.png") 50% 50%/cover no-repeat;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+.business__image {
+  opacity: 1;
+  width: 100%;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease-in-out;
+}
+.business__image img {
+  width: 150px;
+  height: 150px;
+}
+.business__description {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  color: #8a8a8a;
+  transition: all 0.5s ease-in-out;
 }
 .business__card {
-  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
   cursor: pointer;
   position: relative;
   display: flex;
@@ -1362,29 +1405,22 @@ body::after {
   max-width: 18.0625rem;
   min-width: 13.125rem;
   background: #1b1b1b;
-  padding: 3.125rem 1.5625rem 1.5625rem 1.5625rem;
+  padding: 0rem 1.25rem 1.25rem 1.25rem;
 }
-.business__card > img {
+.business__card > img,
+.business__card picture {
   max-width: 100%;
-}
-.business__card:hover {
-  background: rgba(0, 0, 0, 0.85);
 }
 .business__card:hover .arrow-shape {
   background: url("../img/arrow-shap-white.png") 50% 50%/cover no-repeat;
 }
-.business__image {
-  flex: 1 1 auto;
+.business__card:hover .business__image {
+  opacity: 0.5;
+  transform: scale(1.2);
 }
-.business__description {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 160%;
-  display: flex;
-  align-items: flex-end;
-  color: #8a8a8a;
+.business__card:hover .business__description {
+  transform: translateY(-25px);
+  color: #ffffff;
 }
 .business__control {
   margin: 2.5rem 0rem 0rem 0rem;
@@ -1392,6 +1428,11 @@ body::after {
   align-items: center;
   justify-content: center;
   gap: 1.875rem;
+}
+@media (max-width: 29.99875em) {
+  .business__control {
+    margin: 1.25rem 0rem 0rem 0rem;
+  }
 }
 
 .swiper-wrapper {
@@ -1403,6 +1444,7 @@ body::after {
 .business__left {
   position: relative;
   cursor: pointer;
+  transform: rotate(180deg);
 }
 .business__right {
   cursor: pointer;
@@ -1472,10 +1514,16 @@ body::after {
   justify-content: center;
   gap: 1.875rem;
 }
+@media (max-width: 29.99875em) {
+  .case__control {
+    margin: 1.25rem 0rem 0rem 0rem;
+  }
+}
 
 .case__left {
   position: relative;
   cursor: pointer;
+  transform: rotate(180deg);
 }
 .case__right {
   cursor: pointer;
@@ -1498,6 +1546,10 @@ body::after {
     height: 20rem;
   }
 }
+.card-case .card-case-img {
+  padding: 0.9375rem !important;
+  max-width: 100% !important;
+}
 .card-case__left {
   transition: all 0.3s ease-in-out;
   max-width: 18.0625rem;
@@ -1513,7 +1565,8 @@ body::after {
     width: 100%;
   }
 }
-.card-case__left > img {
+.card-case__left > img,
+.card-case__left picture {
   padding: 0.9375rem;
   max-width: 100%;
 }
@@ -1608,13 +1661,19 @@ body::after {
   justify-content: center;
   gap: 1.875rem;
 }
+@media (max-width: 29.99875em) {
+  .team__control {
+    margin: 0rem 0rem 0rem 0rem;
+  }
+}
 .team__left {
   position: relative;
   cursor: pointer;
+  transform: rotate(180deg);
 }
 .team__right {
-  position: relative;
   cursor: pointer;
+  position: relative;
   transform: rotate(180deg);
 }
 
@@ -1661,6 +1720,12 @@ body::after {
   align-items: start;
   color: #5c5c5c;
   height: 3.75rem;
+}
+
+.forum-img {
+  width: 100px !important;
+  height: 100px !important;
+  border-radius: 50% !important;
 }
 
 .forum__top {
@@ -1717,6 +1782,11 @@ body::after {
     gap: 3.125rem;
   }
 }
+@media (max-width: 29.99875em) {
+  .forum__content {
+    gap: 1.875rem;
+  }
+}
 .info-forum {
   display: flex;
   align-items: center;
@@ -1759,15 +1829,21 @@ body::after {
 .info-forum__image {
   cursor: pointer;
   display: flex;
-  padding: 0.3125rem;
   align-items: center;
   justify-content: center;
+  flex: 0 0 100px;
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
 }
-.info-forum__image > img {
+.info-forum__image > img,
+.info-forum__image picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
   max-width: 100%;
   border-radius: 50%;
 }
@@ -1965,11 +2041,13 @@ body::after {
     display: none;
   }
 }
-.request__image img {
+.request__image img,
+.request__image picture {
   max-width: 100%;
 }
 @media (max-width: 50em) {
-  .request__image img {
+  .request__image img,
+.request__image picture {
     max-width: 210px;
   }
 }
@@ -1987,12 +2065,14 @@ body::after {
   top: 0;
   right: 0;
 }
-.know__ball img {
+.know__ball img,
+.know__ball picture {
   width: 180px;
   height: 180px;
 }
 @media (max-width: 61.99875em) {
-  .know__ball img {
+  .know__ball img,
+.know__ball picture {
     width: 180px;
     height: 180px;
   }
@@ -2001,7 +2081,8 @@ body::after {
   .know__ball {
     transform: translate(0, -95px);
   }
-  .know__ball img {
+  .know__ball img,
+.know__ball picture {
     width: 120px;
     height: 120px;
   }
@@ -2055,7 +2136,7 @@ body::after {
   display: flex;
   align-items: center;
   color: #ffffff;
-  margin: 0rem 0rem 1.5625rem 0rem;
+  margin: 1.5625rem 0rem 1.5625rem 0rem;
 }
 .bottom-know__cards {
   display: flex;
@@ -2095,6 +2176,126 @@ body::after {
   .card-know-bottom__description {
     font-size: 0.9375rem;
   }
+}
+
+.form-know {
+  display: flex;
+  flex-direction: column;
+  background: #1b1b1b;
+  border-radius: 10px;
+  padding: 2.5rem;
+  margin: 0rem 0rem 2.5rem 0rem;
+  max-width: 65.0625rem;
+}
+@media (max-width: 61.99875em) {
+  .form-know {
+    padding: 1.25rem;
+  }
+}
+@media (max-width: 29.99875em) {
+  .form-know {
+    margin: 0rem -0.9375rem;
+  }
+}
+.form-know__title {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 160%;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+.form-know__group {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  color: #ffffff;
+  position: relative;
+  z-index: 2;
+  max-width: 29.5625rem;
+  min-width: 17.5rem;
+  display: flex;
+  align-items: center;
+  padding: 1.125rem 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+}
+@media (max-width: 47.99875em) {
+  .form-know__group {
+    max-width: none;
+  }
+}
+@media (max-width: 29.99875em) {
+  .form-know__group {
+    padding: 0.625rem;
+    font-size: 0.875rem;
+  }
+}
+.form-know__group label {
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+}
+.form-know__group::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+.form-know__group {
+  cursor: pointer;
+}
+.form-know__group.form-know__group-checked::before {
+  background-color: #da4533;
+}
+.form-know__checkbox {
+  opacity: 0;
+  visibility: hidden;
+}
+.form-know__form {
+  margin: 1.875rem 0rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9375rem;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+@media (max-width: 47.99875em) {
+  .form-know__form {
+    grid-template-columns: 1fr;
+  }
+}
+.form-know__controll {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.3125rem;
+}
+.form-know__left {
+  cursor: pointer;
+  width: 8.4375rem;
+  height: 2.8125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form-know__right {
+  cursor: pointer;
+  height: 2.8125rem;
+  width: 8.4375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .swiper {
   overflow: hidden;
