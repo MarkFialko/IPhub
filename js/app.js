@@ -239,7 +239,7 @@
             }
         }
         close(selectorValue) {
-            const form = Array.from(document.querySelector("form"));
+            const form = Array.from(document.querySelector(".popup-form"));
             const requiredForm = form.filter((input => input.closest("[required]")));
             const hideInputError = reqInput => {
                 const errorSpan = reqInput.nextSibling.nextSibling;
@@ -3549,11 +3549,11 @@
                         spaceBetween: 20,
                         autoHeight: true
                     },
-                    450: {
+                    550: {
                         slidesPerView: 2,
                         spaceBetween: 20
                     },
-                    700: {
+                    800: {
                         slidesPerView: 3,
                         spaceBetween: 20
                     },
@@ -3601,6 +3601,7 @@
                 slidesPerView: 4,
                 spaceBetween: 10,
                 loop: true,
+                allowTouchMove: false,
                 navigation: {
                     prevEl: ".team__left",
                     nextEl: ".team__right"
@@ -3638,6 +3639,20 @@
                 navigation: {
                     prevEl: ".forum__left",
                     nextEl: ".forum__right"
+                }
+            });
+            new core(".form-know__slider", {
+                modules: [ Navigation ],
+                observer: true,
+                observeParents: true,
+                autoHeight: true,
+                speed: 800,
+                slidesPerView: 1,
+                spaceBetween: 30,
+                allowTouchMove: false,
+                navigation: {
+                    prevEl: ".form-know__left",
+                    nextEl: ".form-know__right"
                 }
             });
         }
@@ -3750,7 +3765,7 @@
     };
     const da = new DynamicAdapt("max");
     da.init();
-    const script_form = Array.from(document.querySelector("form"));
+    const script_form = Array.from(document.querySelector(".popup-form"));
     const checkLabel = document.querySelector(".checkbox-label");
     checkLabel.addEventListener("keydown", (e => {
         const checkbox = document.querySelector(".popup-checkbox");
@@ -3801,6 +3816,15 @@
                 reqInput.attributes.pattern.value = "[0-9]{1}[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}";
             }
             if (!reqInput.validity.valid) showInputError(reqInput); else hideInputError(reqInput);
+            e.preventDefault();
+        }));
+    }));
+    const knowForm = Array.from(document.querySelectorAll(".form-know__group"));
+    knowForm.forEach((input => {
+        input.addEventListener("click", (e => {
+            const checkbox = input.querySelector(".form-know__checkbox");
+            checkbox.checked = !checkbox.checked;
+            input.classList.toggle("form-know__group-checked");
             e.preventDefault();
         }));
     }));
