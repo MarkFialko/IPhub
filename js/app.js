@@ -3585,7 +3585,7 @@
                         slidesPerView: 2,
                         spaceBetween: 20
                     },
-                    1100: {
+                    1200: {
                         slidesPerView: 3,
                         spaceBetween: 20
                     }
@@ -3797,28 +3797,53 @@
             reqInput.classList.remove("input-error");
         }
     };
-    function CreatePhone(phone) {
-        let newPhone = "";
-        for (let i = 0; i < phone.length; i++) {
-            newPhone += phone[i];
-            if (0 === i || 3 === i || 6 === i || 8 === i) newPhone += "-";
+    function getInputNumbersValue(input) {
+        return input.value.replace(/[^\+\d+$]/g, "");
+    }
+    function onPhoneInput(e) {
+        const input = e.target;
+        let inputNumbersValue = getInputNumbersValue(input);
+        let formattedInputValue = "";
+        let selectionStart = input.selectionStart;
+        if (!inputNumbersValue) return input.value = "";
+        if (input.value.length !== selectionStart) {
+            if (e.data && /\D/g.test(e.data)) input.value = inputNumbersValue;
+            return;
         }
-        return newPhone;
+        if ([ "7", "8", "+" ].includes(inputNumbersValue[0])) formattedInputValue = "+7 ("; else formattedInputValue = "+7 (" + inputNumbersValue;
+        if (inputNumbersValue.length > 1) formattedInputValue += inputNumbersValue.substring(2, 5);
+        if (inputNumbersValue.length > 4) formattedInputValue += ") ";
+        if (inputNumbersValue.length > 5) formattedInputValue += inputNumbersValue.substring(5, 8);
+        if (inputNumbersValue.length > 8) formattedInputValue += "-" + inputNumbersValue.substring(8, 10);
+        if (inputNumbersValue.length > 10) formattedInputValue += "-" + inputNumbersValue.substring(10, 12);
+        input.value = formattedInputValue;
+    }
+    function onPhoneKeyDown(e) {
+        const input = e.target;
+        if ("Backspace" === e.key) {
+            if (9 === input.value.length) input.value = input.value.substring(0, input.value.length - 2);
+            if (4 === input.value.length) input.value = input.value.substring(0, input.value.length - 3);
+        }
+    }
+    function onPhonePaste(e) {
+        let pasted = e.clipboardData;
+        const input = e.target;
+        let inputNumbersValue = getInputNumbersValue(input);
+        if (pasted) {
+            let pastedText = pasted.getData("Text");
+            if (!/\D/g.test(pastedText)) input.value = inputNumbersValue;
+        }
     }
     requiredForm.forEach((reqInput => {
         reqInput.addEventListener("input", (e => {
-            if ("true" === reqInput.dataset.phone) if (reqInput.validity.valid) {
-                reqInput.attributes.maxlength.value = 15;
-                reqInput.value = CreatePhone(reqInput.value.toString());
-                reqInput.attributes.pattern.value = "[0-9]{1}-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}";
-            } else {
-                reqInput.attributes.maxlength.value = 11;
-                reqInput.attributes.pattern.value = "[0-9]{1}[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}";
-            }
             if (!reqInput.validity.valid) showInputError(reqInput); else hideInputError(reqInput);
             e.preventDefault();
         }));
     }));
+    const phoneInput = document.querySelector("[data-phone]");
+    phoneInput.addEventListener("input", onPhoneInput);
+    phoneInput.addEventListener("keydown", onPhoneKeyDown);
+    phoneInput.addEventListener("paste", onPhonePaste);
     const knowForm = Array.from(document.querySelectorAll(".form-know__group"));
     knowForm.forEach((input => {
         input.addEventListener("click", (e => {

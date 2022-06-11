@@ -1547,13 +1547,13 @@ body::after {
   }
 }
 .card-case .card-case-img {
-  padding: 0.9375rem !important;
+  padding: 1.25rem !important;
   max-width: 100% !important;
 }
 .card-case__left {
   transition: all 0.3s ease-in-out;
   max-width: 18.0625rem;
-  min-width: 8.6875rem;
+  min-width: 9.9375rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2241,6 +2241,7 @@ body::after {
 }
 .form-know__group::before {
   content: "";
+  transition: all 0.5s ease-in-out;
   position: absolute;
   top: 0;
   left: 0;
