@@ -300,6 +300,11 @@ body::after {
     font-size: 0.8125rem;
   }
 }
+@media (max-width: 43.125rem) {
+  .text-content-popup__description {
+    padding: 0rem 0rem 2.8125rem 0rem;
+  }
+}
 
 .popup-bottom {
   overflow: hidden;
@@ -956,6 +961,11 @@ body::after {
   align-items: center;
   justify-content: space-between;
 }
+.ip__image {
+  display: inline-block;
+  transform: translate(115px, -10%);
+  margin: 0rem 0rem 0rem -6.25rem;
+}
 @media (max-width: 47.99875em) {
   .ip__image {
     display: none;
@@ -963,7 +973,7 @@ body::after {
 }
 .ip__image img,
 .ip__image picture {
-  max-width: 100%;
+  max-width: 80%;
 }
 
 .text-ip__title {
@@ -1036,6 +1046,10 @@ body::after {
     flex-direction: column;
   }
 }
+.text-ip__button {
+  margin: 0rem auto 2.8125rem auto;
+}
+
 .ellipse {
   transition: 0.3s ease-in-out;
   transform: rotate(-5deg);
@@ -2154,9 +2168,6 @@ body::after {
   max-width: 392px;
   border-radius: 8px;
   transition: all 0.3s ease-in-out;
-}
-.bottom-know__card:hover {
-  background: rgba(0, 0, 0, 0.85);
 }
 
 .card-know-bottom__image {
