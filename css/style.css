@@ -300,12 +300,6 @@ body::after {
     font-size: 0.8125rem;
   }
 }
-@media (max-width: 43.125rem) {
-  .text-content-popup__description {
-    padding: 0rem 0rem 2.8125rem 0rem;
-  }
-}
-
 .popup-bottom {
   overflow: hidden;
   position: absolute;
@@ -1046,10 +1040,6 @@ body::after {
     flex-direction: column;
   }
 }
-.text-ip__button {
-  margin: 0rem auto 2.8125rem auto;
-}
-
 .ellipse {
   transition: 0.3s ease-in-out;
   transform: rotate(-5deg);
