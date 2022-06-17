@@ -2537,7 +2537,7 @@ body::after {
 }
 @media (max-width: 30em) {
   .service__content {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 }
 
