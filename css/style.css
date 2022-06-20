@@ -2502,6 +2502,7 @@ body::after {
 }
 
 .service__content {
+  position: relative;
   width: 100%;
   padding: 1.875rem 0rem 5rem 0rem;
   display: grid;
@@ -2583,9 +2584,16 @@ body::after {
   }
 }
 
-._spoller-active {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+.service__error {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 165%;
+  color: #da4533;
+  position: absolute;
+  top: 1.875rem;
+  left: 0;
 }
 .swiper {
   overflow: hidden;

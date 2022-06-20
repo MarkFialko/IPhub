@@ -4132,21 +4132,39 @@
             for (let i = 0; i < 2; i++) if (card.links[i] === settings) return true;
             return false;
         }
-        function renderCards(settings = null) {
+        function checkValidityName(card, name) {
+            if (card.description.includes(name)) return true;
+            return false;
+        }
+        function renderCards(settings = null, name = null) {
             serviceContentList.innerHTML = "";
             let renderSerivceList = serviceCardsList;
             if (settings) if ("Все услуги" !== settings) renderSerivceList = serviceCardsList.filter((card => checkValidityCard(card, settings)));
+            if (name) renderSerivceList = renderSerivceList.filter((card => checkValidityName(card, name)));
             renderSerivceList.forEach((cardElement => {
                 const card = new Card(cardElement, "card-template").generateCard();
                 serviceContentList.append(card);
             }));
+            if (0 === serviceContentList.children.length) serviceContentList.innerHTML = `\n         <p class="service__error">Данная услуга отсутствует</p>\n         `;
         }
         renderCards();
+        const serviceSearchInput = document.querySelector(".search-serivce__input");
+        const serviceSearchButton = document.querySelector(".search__link");
+        serviceSearchButton.addEventListener("click", (e => {
+            const activeInput = document.querySelector(".radio-service__item-active");
+            const thisSettings = activeInput.textContent.trim();
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let searchText = serviceSearchInput.value;
+            renderCards(thisSettings, searchText);
+        }));
         const spollerTitle = document.querySelector(".spollers__title");
         const spollerBody = document.querySelector(".spollers__body");
         const radioButtons = document.querySelectorAll(".radio-service__item");
         radioButtons.forEach((radioButton => radioButton.addEventListener("click", (e => {
             e.preventDefault();
+            e.stopImmediatePropagation();
+            const inputValue = document.querySelector(".search-serivce__input").value;
             const value = e.currentTarget.querySelector("label").textContent;
             spollerTitle.textContent = value;
             _slideUp(spollerBody);
@@ -4154,10 +4172,10 @@
             input.checked = !input.checked;
             if (input.checked) {
                 radioButton.classList.add("radio-service__item-active");
-                renderCards(value);
+                renderCards(value, inputValue);
             } else {
                 radioButton.classList.remove("radio-service__item-active");
-                renderCards();
+                renderCards(null, inputValue);
             }
             radioButtons.forEach((otherButton => {
                 const input = otherButton.children[0];

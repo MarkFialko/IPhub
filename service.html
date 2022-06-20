@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20220617233258">
+	<link rel="stylesheet" href="css/style.min.css?_v=20220621010841">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,16 +16,15 @@
 	<div class="wrapper">
 		<header class="header">
 			<div class="header__container">
-				<a href="../index.html" class="header__logo"><img src="img/logo.svg" alt=""></a>
+				<a href="#" class="header__logo"><img src="img/logo.svg" alt=""></a>
 				<div class="header__center">
 					<a href="tel:+78888888888" class="header__phone">+7 (888) 888 88 88</a>
-					<button data-popup="#form" class="header__consultation">Получить консультацию <p class="link-arr"></p>
-					</button>
+					<button data-popup="#form" class="header__consultation">Получить консультацию <p class="link-arr"></p></button>
 				</div>
 				<div class="header__menu menu">
 					<nav class="menu__body">
 						<ul class="menu__list">
-							<li class="menu__item"><a href="" class="menu__link">Услуги</a></li>
+							<li class="menu__item"><a href="#" class="menu__link">Услуги</a></li>
 							<li class="menu__item"><a href="" class="menu__link">Кейсы</a></li>
 							<li class="menu__item"><a href="" class="menu__link">FAQ</a></li>
 						</ul>
@@ -38,10 +37,8 @@
 							</ul>
 							<ul class="bottom-footer__list">
 								<p>Наши контакты:</p>
-								<li class="bottom-footer__item"><a href="#" class="bottom-footer__link">example@iphub.com</a>
-								</li>
-								<li class="bottom-footer__item"><a href="#" class="bottom-footer__link">+7 (888) 888 88 88</a>
-								</li>
+								<li class="bottom-footer__item"><a href="#" class="bottom-footer__link">example@iphub.com</a></li>
+								<li class="bottom-footer__item"><a href="#" class="bottom-footer__link">+7 (888) 888 88 88</a></li>
 							</ul>
 							<ul class="bottom-footer__list">
 								<p>Мы в соцсетях:</p>
@@ -60,10 +57,7 @@
 								</div>
 								</p>
 							</ul>
-							<picture>
-								<source srcset="img/menu.webp" type="image/webp"><img class="header-menu-image"
-									src="img/menu.png" alt="">
-							</picture>
+							<picture><source srcset="img/menu.webp" type="image/webp"><img class="header-menu-image" src="img/menu.png" alt=""></picture>
 						</div>
 					</nav>
 				</div>
@@ -76,10 +70,10 @@
 			<div class="breadcrumbs">
 				<div class="breadcrumbs__container">
 					<ul class="breadcrumbs__list">
-						<a href="#" class="breadcrumbs__right">
+						<a href="./index.html" class="breadcrumbs__right">
 							<img src="img/arrow-prev.svg" alt="">
 						</a>
-						<li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link breadcrumbs__link-more">Главная</a>
+						<li class="breadcrumbs__item"><a href="./index.html" class="breadcrumbs__link breadcrumbs__link-more">Главная</a>
 						</li>
 						<li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link breadcrumbs__link-active">Все
 								услуги</a></li>
@@ -89,12 +83,12 @@
 			<div class="service__container">
 				<h1 class="service__title">Все услуги</h1>
 				<div class="service__cards">
-					<div class="service__search search-serivce">
-						<input type="text" class="search-serivce__input" placeholder="Начните вводить слово">
+					<form class="service__search search-serivce">
+						<input type="text" class="search-serivce__input" placeholder="Начните вводить слово" required>
 						<button type="submit" class="search__link">
 							<img src="img/search.svg" alt="">
 						</button>
-					</div>
+					</form>
 					<form name="radio-form-service" class="service__radio radio-service radio-hidden">
 						<h3 class="radio-service__title">Категории</h3>
 						<div class="radio-service__item radio-service__item-left">
@@ -173,7 +167,6 @@
 					</div>
 					<div class="service__content">
 					</div>
-
 				</div>
 			</div>
 			<div class="request">
@@ -187,10 +180,7 @@
 							консультацию<p class="ellipse"></p></a>
 					</div>
 					<div class="request__image">
-						<picture>
-							<source srcset="img/service-bottom.webp" type="image/webp"><img src="img/service-bottom.png"
-								alt="">
-						</picture>
+						<picture><source srcset="img/service-bottom.webp" type="image/webp"><img src="img/service-bottom.png" alt=""></picture>
 					</div>
 				</div>
 			</div>
@@ -256,16 +246,10 @@
 	<div id="one" aria-hidden="true" class="popup">
 		<div class="popup__wrapper">
 			<div class="popup__content">
-				<div class="popup-bottom">
-					<picture>
-						<source srcset="img/popup-bottom.webp" type="image/webp"><img src="img/popup-bottom.png" alt="">
-					</picture>
-				</div>
+				<div class="popup-bottom"><picture><source srcset="img/popup-bottom.webp" type="image/webp"><img src="img/popup-bottom.png" alt=""></picture></div>
 
 				<div data-close type="button" class="popup__close">
-					<picture>
-						<source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt="">
-					</picture>
+					<picture><source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt=""></picture>
 				</div>
 				<div class="popup__image popup__image-one">
 				</div>
@@ -274,8 +258,7 @@
 					<h4 class="text-content-popup__subtitle">Генеральный директор</h1>
 						<p class="text-content-popup__description">Создаёт тихое право сильных брендов. Строит импакт-компанию
 							и развивает команду, которая выбрала сферу интеллектуальной
-							собственности своей миссией и которая способна смело и с удовольствием превосходить ожидания
-							клиентов.
+							собственности своей миссией и которая способна смело и с удовольствием превосходить ожидания клиентов.
 							Выводит в принцип
 							работы равноценность и значимости достижения единой цели с клиентом.
 							Выбирает клиентов, как партнёров, для которых бизнес — это личное.
@@ -290,15 +273,9 @@
 	<div id="two" aria-hidden="true" class="popup">
 		<div class="popup__wrapper">
 			<div class="popup__content">
-				<div class="popup-bottom">
-					<picture>
-						<source srcset="img/popup-bottom.webp" type="image/webp"><img src="img/popup-bottom.png" alt="">
-					</picture>
-				</div>
+				<div class="popup-bottom"><picture><source srcset="img/popup-bottom.webp" type="image/webp"><img src="img/popup-bottom.png" alt=""></picture></div>
 				<div data-close type="button" class="popup__close">
-					<picture>
-						<source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt="">
-					</picture>
+					<picture><source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt=""></picture>
 				</div>
 				<div class="popup__image popup__image-two">
 				</div>
@@ -307,8 +284,7 @@
 					<h4 class="text-content-popup__subtitle">Руководитель отдела патентно-юридического делопроизводства</h1>
 						<p class="text-content-popup__description">Создаёт тихое право сильных брендов. Строит импакт-компанию
 							и развивает команду, которая выбрала сферу интеллектуальной
-							собственности своей миссией и которая способна смело и с удовольствием превосходить ожидания
-							клиентов.
+							собственности своей миссией и которая способна смело и с удовольствием превосходить ожидания клиентов.
 							Выводит в принцип
 							работы равноценность и значимости достижения единой цели с клиентом.
 							Выбирает клиентов, как партнёров, для которых бизнес — это личное.
@@ -323,15 +299,9 @@
 	<div id="three" aria-hidden="true" class="popup">
 		<div class="popup__wrapper">
 			<div class="popup__content">
-				<div class="popup-bottom">
-					<picture>
-						<source srcset="img/popup-bottom.webp" type="image/webp"><img src="img/popup-bottom.png" alt="">
-					</picture>
-				</div>
+				<div class="popup-bottom"><picture><source srcset="img/popup-bottom.webp" type="image/webp"><img src="img/popup-bottom.png" alt=""></picture></div>
 				<div data-close type="button" class="popup__close">
-					<picture>
-						<source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt="">
-					</picture>
+					<picture><source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt=""></picture>
 				</div>
 				<div class="popup__image popup__image-three">
 				</div>
@@ -340,8 +310,7 @@
 					<h4 class="text-content-popup__subtitle">Патентный поверенный РФ</h1>
 						<p class="text-content-popup__description">Создаёт тихое право сильных брендов. Строит импакт-компанию
 							и развивает команду, которая выбрала сферу интеллектуальной
-							собственности своей миссией и которая способна смело и с удовольствием превосходить ожидания
-							клиентов.
+							собственности своей миссией и которая способна смело и с удовольствием превосходить ожидания клиентов.
 							Выводит в принцип
 							работы равноценность и значимости достижения единой цели с клиентом.
 							Выбирает клиентов, как партнёров, для которых бизнес — это личное.
@@ -356,15 +325,9 @@
 	<div id="four" aria-hidden="true" class="popup">
 		<div class="popup__wrapper">
 			<div class="popup__content">
-				<div class="popup-bottom">
-					<picture>
-						<source srcset="img/popup-bottom.webp" type="image/webp"><img src="img/popup-bottom.png" alt="">
-					</picture>
-				</div>
+				<div class="popup-bottom"><picture><source srcset="img/popup-bottom.webp" type="image/webp"><img src="img/popup-bottom.png" alt=""></picture></div>
 				<div data-close type="button" class="popup__close">
-					<picture>
-						<source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt="">
-					</picture>
+					<picture><source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt=""></picture>
 				</div>
 				<div class="popup__image popup__image-four">
 				</div>
@@ -373,8 +336,7 @@
 					<h4 class="text-content-popup__subtitle">Патентный поверенный РФ</h1>
 						<p class="text-content-popup__description">Создаёт тихое право сильных брендов. Строит импакт-компанию
 							и развивает команду, которая выбрала сферу интеллектуальной
-							собственности своей миссией и которая способна смело и с удовольствием превосходить ожидания
-							клиентов.
+							собственности своей миссией и которая способна смело и с удовольствием превосходить ожидания клиентов.
 							Выводит в принцип
 							работы равноценность и значимости достижения единой цели с клиентом.
 							Выбирает клиентов, как партнёров, для которых бизнес — это личное.
@@ -389,15 +351,9 @@
 	<div id="five" aria-hidden="true" class="popup">
 		<div class="popup__wrapper">
 			<div class="popup__content">
-				<div class="popup-bottom">
-					<picture>
-						<source srcset="img/popup-bottom.webp" type="image/webp"><img src="img/popup-bottom.png" alt="">
-					</picture>
-				</div>
+				<div class="popup-bottom"><picture><source srcset="img/popup-bottom.webp" type="image/webp"><img src="img/popup-bottom.png" alt=""></picture></div>
 				<div data-close type="button" class="popup__close">
-					<picture>
-						<source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt="">
-					</picture>
+					<picture><source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt=""></picture>
 				</div>
 				<div class="popup__image popup__image-five">
 				</div>
@@ -406,8 +362,7 @@
 					<h4 class="text-content-popup__subtitle">Адвокат</h1>
 						<p class="text-content-popup__description">Создаёт тихое право сильных брендов. Строит импакт-компанию
 							и развивает команду, которая выбрала сферу интеллектуальной
-							собственности своей миссией и которая способна смело и с удовольствием превосходить ожидания
-							клиентов.
+							собственности своей миссией и которая способна смело и с удовольствием превосходить ожидания клиентов.
 							Выводит в принцип
 							работы равноценность и значимости достижения единой цели с клиентом.
 							Выбирает клиентов, как партнёров, для которых бизнес — это личное.
@@ -423,9 +378,7 @@
 		<div class="popup__wrapper">
 			<div class="popup__content popup-form__content">
 				<div data-close type="button" class="popup__close">
-					<picture>
-						<source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt="">
-					</picture>
+					<picture><source srcset="img/close.webp" type="image/webp"><img src="img/close.png" alt=""></picture>
 				</div>
 				<div class="popup__form form-popup">
 					<h3 class="form-popup__title">Оставьте заявку</h3>
@@ -451,18 +404,16 @@
 							<textarea tabindex="4" name="" id=""></textarea>
 						</div>
 						<div class="form-group form-group-checkbox">
-							<label tabindex="5" class="checkbox-label" for="popup-check">Я принимаю соглашение
-								на <span>обработку персональных данных</span> и <span>политику конфиденциальности</span></label>
+							<label tabindex="5" class="checkbox-label" for="popup-check">Я принимаю соглашение на <span>обработку персональных данных</span> и <span>политику конфиденциальности</span></label>
 							<input class="popup-checkbox" id="popup-check" name="popup-checkbox" type="checkbox" required>
 						</div>
-						<button disabled="true" class="text-ip__button button-form-black button__black">Отправить<p
-								class="link-arr"></p>
+						<button disabled="true" class="text-ip__button button-form-black button__black">Отправить<p class="link-arr"></p>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script src="js/app.min.js?_v=20220617233258"></script>
+	<script src="js/app.min.js?_v=20220621010841"></script>
 </body>
 
 </html>
