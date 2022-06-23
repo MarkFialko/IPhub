@@ -143,6 +143,11 @@ body::after {
     height: 100vh;
   }
 }
+@media (max-width: 29.99875em) {
+  .popup.popup-form-fix, .popup.popup-bio {
+    padding: 0rem 0rem 2.8125rem 0rem;
+  }
+}
 
 .popup_show {
   z-index: 1002;
@@ -441,6 +446,9 @@ body::after {
   align-items: center;
   margin: -30px auto 0 auto;
   width: 8.4375rem;
+  position: relative;
+  top: -70px;
+  transform: translateY(70px);
 }
 
 .popup-checkbox {
