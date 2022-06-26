@@ -144,8 +144,8 @@ body::after {
   }
 }
 @media (max-width: 29.99875em) {
-  .popup.popup-form-fix, .popup.popup-bio {
-    padding: 0rem 0rem 2.8125rem 0rem;
+  .popup .popup-form-fix, .popup .popup-bio {
+    padding-bottom: 6rem;
   }
 }
 
