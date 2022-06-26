@@ -2577,12 +2577,19 @@ body::after {
   align-items: start;
   width: 100%;
 }
+.spollers__body .radio-service {
+  padding: 1.5625rem 0rem 0rem 0rem;
+}
 .spollers__body .radio-service__item {
   width: 100%;
 }
 .spollers__body .radio-service__item-left {
-  border-radius: 0;
+  border-radius: 0.3125rem 0.3125rem 0rem 0rem;
 }
+.spollers__body .radio-service__item-right {
+  border-radius: 0rem 0rem 0.3125rem 0.3125rem;
+}
+
 .service-spollers {
   display: none;
 }
