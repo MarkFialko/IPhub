@@ -70,102 +70,141 @@
 			<div class="breadcrumbs">
 				<div class="breadcrumbs__container">
 					<ul class="breadcrumbs__list">
-						<a href="./index.html" class="breadcrumbs__right">
+						<a href="./cases.html" class="breadcrumbs__right">
 							<img src="img/arrow-prev.svg" alt="">
 						</a>
 						<li class="breadcrumbs__item"><a href="./index.html" class="breadcrumbs__link breadcrumbs__link-more">Главная</a>
 						</li>
-						<li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link breadcrumbs__link-active">Все
-								услуги</a></li>
+						<li class="breadcrumbs__item"><a href="./cases.html" class="breadcrumbs__link breadcrumbs__link-more">Все кейсы</a>
+						</li>
+						<li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link breadcrumbs__link-active">Регистрация товарного знака для бренда
+								CIRKLE</a></li>
 					</ul>
 				</div>
 			</div>
-			<div class="service__container">
-				<h1 class="service__title">Все услуги</h1>
-				<div class="service__cards">
-					<form class="service__search search-serivce">
-						<input type="text" class="search-serivce__input" placeholder="Начните вводить слово" required>
-						<button type="submit" class="search__link">
-							<img src="img/search.svg" alt="">
-						</button>
-					</form>
-					<form name="radio-form-service" class="service__radio radio-service radio-hidden">
-						<h3 class="radio-service__title">Категории</h3>
-						<div class="radio-service__item radio-service__item-left">
-							<input name="service-input-radio" type="radio" id="all">
-							<label for="all">Все услуги</label>
+			<div class="register">
+				<div class="register__container">
+					<div class="register__top">
+						<div class="register__text">
+							<p class="register__title">ТОВАРНЫЙ ЗНАК</p>
+							<h2 class="register__subtitile">Регистрация товарного знака для компании CIRKLE</h2>
+							<p class="register__description">Был зарегистрирован товарный знак в отношении косметических
+								товаров.</p>
 						</div>
-						<div class="radio-service__item">
-							<input name="service-input-radio" type="radio" id="sign">
-							<label for="sign">Товарные знаки</label>
+						<div class="register__image">
+							<picture><source srcset="img/sl1.webp" type="image/webp"><img src="img/sl1.png" alt=""></picture>
 						</div>
-						<div class="radio-service__item">
-							<input name="service-input-radio" type="radio" id="patent">
-							<label for="patent">Патенты</label>
+					</div>
+					<div class="register__content">
+						<div class="register__item item-register-top item-register">
+							<h2 class="item-register__title">О компании</h2>
+							<p class="item-register__subtitle">CIRKLE – магазин косметических товаров и производитель
+								продукции.</p>
+							<div class="item-register__image">
+								<picture><source srcset="img/reg1.webp" type="image/webp"><img src="img/reg1.png" alt=""></picture>
+							</div>
 						</div>
-						<div class="radio-service__item">
-							<input name="service-input-radio" type="radio" id="design">
-							<label for="design">Дизайн</label>
+						<div class="register__item item-register-middle item-register">
+							<h2 class="item-register__title">Задачи</h2>
+							<p class="item-register__subtitle">1. Подготовка и подача заявки для регистрации товарного знака.<br>
+								2. Подготовка ответа на уведомление для снятия доводов для отказа в регистрации товарного знака.<br>
+								3. Получение Свидетельства на товарный.
+							</p>
+							<div class="item-register__image">
+								<picture><source srcset="img/reg3.webp" type="image/webp"><img src="img/reg3.png" alt=""></picture>
+								<picture><source srcset="img/reg3.webp" type="image/webp"><img src="img/reg3.png" alt=""></picture>
+							</div>
 						</div>
-						<div class="radio-service__item">
-							<input name="service-input-radio" type="radio" id="it">
-							<label for="it">IT</label>
+						<div class="register__item item-register-middle item-register">
+							<h2 class="item-register__title">Решение</h2>
+							<p class="item-register__subtitle">По оценке экспертизы выявлено основание для отказа, так как были противопоставлены 7 товарных знаков, которые были
+								признаны сходными до степени смешения.<br><br>
+								Нами было доказано, что у потребителя не возникнет смешения брендов, так как деятельность заявителя и правообладателей
+								знаков не пересекается и относится к другим сферам.<br><br>
+								Товарный знак был зарегистрированы в отношении косметических товаров и услуг магазина косметики.
+							</p>
+							<div class="item-register__image">
+							</div>
 						</div>
-						<div class="radio-service__item">
-							<input name="service-input-radio" type="radio" id="protection">
-							<label for="protection">Защита</label>
+						<div class="register__item item-register-first item-register">
+							<div class="item-register__image">
+								<picture><source srcset="img/reg2.webp" type="image/webp"><img src="img/reg2.png" alt=""></picture>
+							</div>
 						</div>
-						<div class="radio-service__item">
-							<input name="service-input-radio" type="radio" id="control">
-							<label for="control">Управление</label>
-						</div>
-						<div class="radio-service__item radio-service__item-right">
-							<input name="service-input-radio" type="radio" id="learn">
-							<label for="learn">Обучение</label>
-						</div>
-					</form>
-					<div data-spollers class="spollers service-spollers">
-						<div class="spollers__item">
-							<button type="button" data-spoller class="spollers__title">Все услуги</button>
-							<div class="spollers__body">
-								<form name="radio-form-service-spoller radio-form-service" class="service__radio radio-service">
-									<div class="radio-service__item radio-service__item-active radio-service__item-left">
-										<input name="service-input-radio" type="radio" id="all">
-										<label for="all">Все услуги</label>
-									</div>
-									<div class="radio-service__item">
-										<input name="service-input-radio" type="radio" id="sign">
-										<label for="sign">Товарные знаки</label>
-									</div>
-									<div class="radio-service__item">
-										<input name="service-input-radio" type="radio" id="patent">
-										<label for="patent">Патенты</label>
-									</div>
-									<div class="radio-service__item">
-										<input name="service-input-radio" type="radio" id="design">
-										<label for="design">Дизайн</label>
-									</div>
-									<div class="radio-service__item">
-										<input name="service-input-radio" type="radio" id="it">
-										<label for="it">IT</label>
-									</div>
-									<div class="radio-service__item">
-										<input name="service-input-radio" type="radio" id="protection">
-										<label for="protection">Защита</label>
-									</div>
-									<div class="radio-service__item">
-										<input name="service-input-radio" type="radio" id="control">
-										<label for="control">Управление</label>
-									</div>
-									<div class="radio-service__item radio-service__item-right">
-										<input name="service-input-radio" type="radio" id="learn">
-										<label for="learn">Обучение</label>
-									</div>
-								</form>
+						<div class="register__item item-register-middle item-register">
+							<h2 class="item-register__title">Результат</h2>
+							<p class="item-register__subtitle">1. Успешная регистрация товарного знака за 10 месяцев.<br>
+								2. Номер заявки — 2020702165.<br>
+								3. Номер государственной регистрации — 787439.
+							</p>
+							<div class="item-register__image">
+								<picture><source srcset="img/reg4.webp" type="image/webp"><img data-popup="#reg" class="reg-popup" src="img/reg4.png" alt=""></picture>
+								<picture><source srcset="img/reg4.webp" type="image/webp"><img data-popup="#reg" class="reg-popup" src="img/reg4.png" alt=""></picture>
 							</div>
 						</div>
 					</div>
-					<div class="service__content">
+					<div class="case-reg case__container">
+						<h2 class="case__title">Схожие кейсы</h2>
+						<div class="case__actions">
+							<p class="case__subtitle">Наши реальные истории о том, как мы помогали своим клиентам регистрировать
+								товарные знаки и оформлять права на объекты
+								интеллектуальной собственности</p>
+							<a href="./cases.html" class="business__button button__black">Все кейсы <p class="link-arr"></p></a>
+						</div>
+						<div class="case-reg__slider case__slider swiper">
+							<div class="case__wrapper swiper-wrapper">
+								<div class="case__slide swiper-slide">
+									<a href="./register.html" class="case__card card-case">
+										<div class="card-case__left">
+											<picture><source srcset="img/sl1.webp" type="image/webp"><img class="card-case-img" src="img/sl1.png" alt=""></picture>
+										</div>
+										<div class="card-case__right">
+											<div class="card-case__content">
+												<h4 class="card-case__title">CIRKLE — производитель косметической продукции</h4>
+												<p class="card-case__subtitle">Предварительный отказ — не приговор! Как мы защищали
+													монополию российского производителя строительных материалов.</p>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="case__slide swiper-slide">
+									<a href="./register.html" class="case__card card-case">
+										<div class="card-case__left">
+											<picture><source srcset="img/sl2.webp" type="image/webp"><img class="card-case-img" src="img/sl2.png" alt=""></picture>
+										</div>
+										<div class="card-case__right">
+											<div class="card-case__content">
+												<h4 class="card-case__title">HANDS — производитель строительных материалов</h4>
+												<p class="card-case__subtitle">Предварительный отказ — не приговор! Как мы защищали
+													монополию российского производителя строительных материалов.</p>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="case__slide swiper-slide">
+									<a href="./register.html" class="case__card card-case">
+										<div class="card-case__left">
+											<picture><source srcset="img/sl3.webp" type="image/webp"><img class="card-case-img" src="img/sl3.png" alt=""></picture>
+										</div>
+										<div class="card-case__right">
+											<div class="card-case__content">
+												<h4 class="card-case__title">HANDS — производитель строительных материалов</h4>
+												<p class="card-case__subtitle">Предварительный отказ — не приговор! Как мы защищали
+													монополию российского производителя строительных материалов.</p>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="case__control">
+								<div class="case__left">
+									<img src="img/arrow-next.svg" alt="">
+								</div>
+								<div class="case__right">
+									<img src="img/arrow-prev.svg" alt="">
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -180,7 +219,7 @@
 							консультацию<p class="ellipse"></p></a>
 					</div>
 					<div class="request__image">
-						<picture><source srcset="img/service-bottom.webp" type="image/webp"><img src="img/service-bottom.png" alt=""></picture>
+						<picture><source srcset="img/case-case.webp" type="image/webp"><img src="img/case-case.png" alt=""></picture>
 					</div>
 				</div>
 			</div>
@@ -229,19 +268,6 @@
 				</div>
 			</div>
 		</footer>
-		<template class="card-template">
-			<div class="business__card card">
-				<div class="arrow-shape"></div>
-				<div class="card__links">
-					<p class="card__link card__link-angle"></p>
-					<p class="card__link card__link-center"></p>
-				</div>
-				<div class="business__image">
-					<picture><source srcset="img/" type="image/webp"><img class="card-img" src="img/" alt=""></picture>
-				</div>
-				<p class="business__description"></p>
-			</div>
-		</template>
 	</div>
 	<div id="reg" aria-hidden="true" class="popup ">
 		<div class="popup__wrapper">

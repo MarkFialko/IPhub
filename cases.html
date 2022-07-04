@@ -76,12 +76,12 @@
 						<li class="breadcrumbs__item"><a href="./index.html" class="breadcrumbs__link breadcrumbs__link-more">Главная</a>
 						</li>
 						<li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link breadcrumbs__link-active">Все
-								услуги</a></li>
+								кейсы</a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="service__container">
-				<h1 class="service__title">Все услуги</h1>
+				<h1 class="service__title">Все кейсы</h1>
 				<div class="service__cards">
 					<form class="service__search search-serivce">
 						<input type="text" class="search-serivce__input" placeholder="Начните вводить слово" required>
@@ -165,7 +165,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="service__content">
+					<div class="case-case__content">
 					</div>
 				</div>
 			</div>
@@ -180,7 +180,7 @@
 							консультацию<p class="ellipse"></p></a>
 					</div>
 					<div class="request__image">
-						<picture><source srcset="img/service-bottom.webp" type="image/webp"><img src="img/service-bottom.png" alt=""></picture>
+						<picture><source srcset="img/case-case.webp" type="image/webp"><img src="img/case-case.png" alt=""></picture>
 					</div>
 				</div>
 			</div>
@@ -230,17 +230,21 @@
 			</div>
 		</footer>
 		<template class="card-template">
-			<div class="business__card card">
-				<div class="arrow-shape"></div>
+			<a href="./register.html" class="case__card card-case">
 				<div class="card__links">
 					<p class="card__link card__link-angle"></p>
 					<p class="card__link card__link-center"></p>
 				</div>
-				<div class="business__image">
-					<picture><source srcset="img/" type="image/webp"><img class="card-img" src="img/" alt=""></picture>
+				<div class="card-case__left">
+					<img class="card-case-img" src="img/" alt=""></picture>
 				</div>
-				<p class="business__description"></p>
-			</div>
+				<div class="card-case__right">
+					<div class="card-case__content">
+						<h4 class="card-case__title"></h4>
+						<p class="card-case__subtitle"></p>
+					</div>
+				</div>
+			</a>
 		</template>
 	</div>
 	<div id="reg" aria-hidden="true" class="popup ">

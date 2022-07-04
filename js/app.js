@@ -15,6 +15,7 @@
         }));
     }
     let _slideUp = (target, duration = 500, showmore = 0) => {
+        target.parentNode.querySelector(".spollers__title").classList.remove("_spoller-active");
         if (!target.classList.contains("_slide")) {
             target.classList.add("_slide");
             target.style.transitionProperty = "height, margin, padding";
@@ -47,6 +48,7 @@
         }
     };
     let _slideDown = (target, duration = 500, showmore = 0) => {
+        target.parentNode.querySelector(".spollers__title").classList.add("_spoller-active");
         if (!target.classList.contains("_slide")) {
             target.classList.add("_slide");
             target.hidden = target.hidden ? false : null;
@@ -442,6 +444,8 @@
                 }
             };
             form.forEach((input => {
+                const checkbox = document.querySelector(".popup-checkbox");
+                if (checkbox) checkbox.checked = false;
                 input.value = "";
             }));
             requiredForm.forEach((reqInput => {
@@ -3749,9 +3753,9 @@
                         slidesPerView: 3,
                         spaceBetween: 20
                     },
-                    900: {
+                    1100: {
                         slidesPerView: 4,
-                        spaceBetween: 30
+                        spaceBetween: 20
                     }
                 },
                 on: {}
@@ -3773,12 +3777,8 @@
                         spaceBetween: 20,
                         autoHeight: true
                     },
-                    650: {
+                    975: {
                         slidesPerView: 2,
-                        spaceBetween: 20
-                    },
-                    1200: {
-                        slidesPerView: 3,
                         spaceBetween: 20
                     }
                 },
@@ -3851,6 +3851,23 @@
     window.addEventListener("load", (function(e) {
         initSliders();
     }));
+    const formKnowSlider = document.querySelector(".form-know__wrapper");
+    if (formKnowSlider) {
+        const counterSlider = document.querySelector(".form-know__all");
+        const countSlider = document.querySelector(".form-know__count");
+        countSlider.textContent = "1";
+        counterSlider.textContent = formKnowSlider.children.length;
+        const formKnowLeft = document.querySelector(".form-know__left");
+        const formKnowRight = document.querySelector(".form-know__right");
+        formKnowLeft.addEventListener("click", (e => {
+            e.preventDefault();
+            if (1 != countSlider.textContent) countSlider.textContent = parseInt(countSlider.textContent) - 1;
+        }));
+        formKnowRight.addEventListener("click", (e => {
+            e.preventDefault();
+            if (countSlider.textContent != formKnowSlider.children.length) countSlider.textContent = parseInt(countSlider.textContent) + 1;
+        }));
+    }
     let addWindowScrollEvent = false;
     setTimeout((() => {
         if (addWindowScrollEvent) {
@@ -3961,15 +3978,6 @@
     checkLabel.addEventListener("keydown", (e => {
         const checkbox = document.querySelector(".popup-checkbox");
         if ("Enter" === e.key) checkbox.checked = !checkbox.checked;
-        e.preventDefault();
-    }));
-    script_form.forEach((input => {
-        input.addEventListener("onsubmit", (e => {
-            e.preventDefault();
-        }));
-        input.addEventListener("submit", (e => {
-            e.preventDefault();
-        }));
     }));
     const requiredForm = script_form.filter((input => input.closest("[required]")));
     const showInputError = reqInput => {
@@ -4041,7 +4049,6 @@
             const checkbox = input.querySelector(".form-know__checkbox");
             checkbox.checked = !checkbox.checked;
             input.classList.toggle("form-know__group-checked");
-            e.preventDefault();
         }));
     }));
     const serviceContentList = document.querySelector(".service__content");
@@ -4135,11 +4142,15 @@
             if (card.description.includes(name)) return true;
             return false;
         }
+        let isSearch = false;
         function renderCards(settings = null, name = null) {
             serviceContentList.innerHTML = "";
             let renderSerivceList = serviceCardsList;
             if (settings) if ("Все услуги" !== settings) renderSerivceList = serviceCardsList.filter((card => checkValidityCard(card, settings)));
-            if (name) renderSerivceList = renderSerivceList.filter((card => checkValidityName(card, name)));
+            if (name && isSearch) {
+                name = name.trim();
+                renderSerivceList = renderSerivceList.filter((card => checkValidityName(card, name)));
+            }
             renderSerivceList.forEach((cardElement => {
                 const card = new Card(cardElement, "card-template").generateCard();
                 serviceContentList.append(card);
@@ -4154,6 +4165,7 @@
             const thisSettings = activeInput.textContent.trim();
             e.preventDefault();
             e.stopImmediatePropagation();
+            isSearch = true;
             let searchText = serviceSearchInput.value;
             renderCards(thisSettings, searchText);
         }));
@@ -4161,6 +4173,270 @@
         const spollerBody = document.querySelector(".spollers__body");
         const radioButtons = document.querySelectorAll(".radio-service__item");
         radioButtons.forEach((radioButton => radioButton.addEventListener("click", (e => {
+            isSearch = false;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const inputValue = document.querySelector(".search-serivce__input").value;
+            const value = e.currentTarget.querySelector("label").textContent;
+            spollerTitle.textContent = value;
+            _slideUp(spollerBody);
+            const input = radioButton.children[0];
+            input.checked = !input.checked;
+            if (input.checked) {
+                radioButton.classList.add("radio-service__item-active");
+                renderCards(value, inputValue);
+            } else {
+                radioButton.classList.remove("radio-service__item-active");
+                renderCards(null, inputValue);
+            }
+            radioButtons.forEach((otherButton => {
+                const input = otherButton.children[0];
+                if (input.checked) ; else otherButton.classList.remove("radio-service__item-active");
+            }));
+        }))));
+    }
+    const caseContentList = document.querySelector(".case-case__content");
+    if (caseContentList) {
+        const serviceCardsList = [ {
+            links: [ "Товарные знаки", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Как в результате защиты мы зарегистрировали бренд российской косметики при наличии оснований для отказа"
+        }, {
+            links: [ "Управление", "Патенты" ],
+            img: "sl2.png",
+            title: "Camera IQ — производитель систем машинного зрения",
+            description: "Предварительный отказ — не приговор! Как мы защищали монополию российского производителя строительных материалов"
+        }, {
+            links: [ "Защита", "IT" ],
+            img: "sl3.png",
+            title: "HANDS — производитель строительных материалов",
+            description: "Защита прав после ребрендинга. Как провести успешную регистрацию"
+        }, {
+            links: [ "Обучение", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Как в результате защиты мы зарегистрировали бренд российской косметики при наличии оснований для отказа"
+        }, {
+            links: [ "Товарные знаки", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Предварительный отказ — не приговор! Как мы защищали монополию российского производителя строительных материалов"
+        }, {
+            links: [ "Управление", "Патенты" ],
+            img: "sl2.png",
+            title: "Camera IQ — производитель систем машинного зрения",
+            description: "Защита прав после ребрендинга. Как провести успешную регистрацию"
+        }, {
+            links: [ "Защита", "IT" ],
+            img: "sl3.png",
+            title: "HANDS — производитель строительных материалов",
+            description: "Как в результате защиты мы зарегистрировали бренд российской косметики при наличии оснований для отказа"
+        }, {
+            links: [ "Обучение", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Предварительный отказ — не приговор! Как мы защищали монополию российского производителя строительных материалов"
+        }, {
+            links: [ "Товарные знаки", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Защита прав после ребрендинга. Как провести успешную регистрацию"
+        }, {
+            links: [ "Управление", "Патенты" ],
+            img: "sl2.png",
+            title: "Camera IQ — производитель систем машинного зрения",
+            description: "Как в результате защиты мы зарегистрировали бренд российской косметики при наличии оснований для отказа"
+        }, {
+            links: [ "Защита", "IT" ],
+            img: "sl3.png",
+            title: "HANDS — производитель строительных материалов",
+            description: "Предварительный отказ — не приговор! Как мы защищали монополию российского производителя строительных материалов"
+        }, {
+            links: [ "Обучение", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Защита прав после ребрендинга. Как провести успешную регистрацию"
+        } ];
+        class CardCase {
+            constructor(data, selector) {
+                this.links = data.links;
+                this._img = data.img;
+                this._description = data.description;
+                this._title = data.title;
+                this._selector = selector;
+            }
+            _getTemplate() {
+                const cardElement = document.querySelector(`.${this._selector}`).content.querySelector(".card-case").cloneNode(true);
+                return cardElement;
+            }
+            generateCard() {
+                this._element = this._getTemplate();
+                this._element.querySelector(".card__link-angle").textContent = this.links[0];
+                this._element.querySelector(".card__link-center").textContent = this.links[1];
+                this._element.querySelector(".card-case-img").src += this._img;
+                this._element.querySelector(".card-case__title").textContent = this._title;
+                this._element.querySelector(".card-case__subtitle").textContent = this._description;
+                return this._element;
+            }
+        }
+        function checkValidityCard(card, settings) {
+            for (let i = 0; i < 2; i++) if (card.links[i] === settings) return true;
+            return false;
+        }
+        function checkValidityName(card, name) {
+            if (card.description.includes(name) || card.title.includes(name)) return true;
+            return false;
+        }
+        let isSearch = false;
+        function renderCards(settings = null, name = null) {
+            caseContentList.innerHTML = "";
+            let renderSerivceList = serviceCardsList;
+            if (settings) if ("Все услуги" !== settings) renderSerivceList = serviceCardsList.filter((card => checkValidityCard(card, settings)));
+            if (name && isSearch) {
+                name = name.trim();
+                renderSerivceList = renderSerivceList.filter((card => checkValidityName(card, name)));
+            }
+            renderSerivceList.forEach((cardElement => {
+                const card = new CardCase(cardElement, "card-template").generateCard();
+                caseContentList.append(card);
+            }));
+            if (0 === caseContentList.children.length) caseContentList.innerHTML = `\n         <p class="service__error">Данная услуга отсутствует</p>\n         `;
+        }
+        renderCards();
+        const serviceSearchInput = document.querySelector(".search-serivce__input");
+        const serviceSearchButton = document.querySelector(".search__link");
+        serviceSearchButton.addEventListener("click", (e => {
+            const activeInput = document.querySelector(".radio-service__item-active");
+            const thisSettings = activeInput.textContent.trim();
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            isSearch = true;
+            let searchText = serviceSearchInput.value;
+            renderCards(thisSettings, searchText);
+        }));
+        const spollerTitle = document.querySelector(".spollers__title");
+        const spollerBody = document.querySelector(".spollers__body");
+        const radioButtons = document.querySelectorAll(".radio-service__item");
+        radioButtons.forEach((radioButton => radioButton.addEventListener("click", (e => {
+            isSearch = false;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const inputValue = document.querySelector(".search-serivce__input").value;
+            const value = e.currentTarget.querySelector("label").textContent;
+            spollerTitle.textContent = value;
+            _slideUp(spollerBody);
+            const input = radioButton.children[0];
+            input.checked = !input.checked;
+            if (input.checked) {
+                radioButton.classList.add("radio-service__item-active");
+                renderCards(value, inputValue);
+            } else {
+                radioButton.classList.remove("radio-service__item-active");
+                renderCards(null, inputValue);
+            }
+            radioButtons.forEach((otherButton => {
+                const input = otherButton.children[0];
+                if (input.checked) ; else otherButton.classList.remove("radio-service__item-active");
+            }));
+        }))));
+    }
+    const faqContentList = document.querySelector(".faq-spoller-content");
+    if (faqContentList) {
+        const serviceCardsList = [ {
+            links: [ "Обучение", "Дизайн" ],
+            title: "Что такое патент и что он дает?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Защита", "IT" ],
+            title: "Чем подтверждается факт поступления заявки в Роспатент?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Товарные знаки", "Обучение" ],
+            title: "Какие документы необходимо представить?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Патенты", "Защита" ],
+            title: "Каков порядок рассмотрения заявки на выдачу патента на изобретение?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Товарные знаки", "Патенты" ],
+            title: "Можно ли продлить срок действия исключительного права?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Обучение", "Управление" ],
+            title: "Кто может подать заявку?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Защита", "Патенты" ],
+            title: "Чем подтверждается факт поступления заявки в Роспатент?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        } ];
+        class CardFaq {
+            constructor(data, selector) {
+                this.links = data.links;
+                this._description = data.description;
+                this._title = data.title;
+                this._selector = selector;
+            }
+            _getTemplate() {
+                const cardElement = document.querySelector(`.${this._selector}`).content.querySelector(".card-faq").cloneNode(true);
+                return cardElement;
+            }
+            generateCard() {
+                this._element = this._getTemplate();
+                this._element.querySelector(".card__link-angle").textContent = this.links[0];
+                this._element.querySelector(".card__link-center").textContent = this.links[1];
+                this._element.querySelector(".faq-spoller__title").textContent = this._title;
+                this._element.addEventListener("click", (e => {
+                    e.preventDefault();
+                    _slideToggle(this._element.querySelector(".faq-spoller__body"), 500);
+                }));
+                _slideUp(this._element.querySelector(".faq-spoller__body"), 500);
+                this._element.querySelector(".faq-spoller__body-body").textContent = this._description;
+                return this._element;
+            }
+        }
+        function checkValidityCard(card, settings) {
+            for (let i = 0; i < 2; i++) if (card.links[i] === settings) return true;
+            return false;
+        }
+        function checkValidityName(card, name) {
+            if (card.description.includes(name) || card.title.includes(name)) return true;
+            return false;
+        }
+        let isSearch = false;
+        function renderCards(settings = null, name = null) {
+            faqContentList.innerHTML = "";
+            let renderSerivceList = serviceCardsList;
+            if (settings) if ("Все услуги" !== settings) renderSerivceList = serviceCardsList.filter((card => checkValidityCard(card, settings)));
+            if (name && isSearch) {
+                name = name.trim();
+                renderSerivceList = renderSerivceList.filter((card => checkValidityName(card, name)));
+            }
+            renderSerivceList.forEach((cardElement => {
+                const card = new CardFaq(cardElement, "card-template").generateCard();
+                faqContentList.append(card);
+            }));
+            if (0 === faqContentList.children.length) faqContentList.innerHTML = `\n         <p class="service__error">Данная услуга отсутствует</p>\n         `;
+        }
+        renderCards();
+        const serviceSearchInput = document.querySelector(".search-serivce__input");
+        const serviceSearchButton = document.querySelector(".search__link");
+        serviceSearchButton.addEventListener("click", (e => {
+            const activeInput = document.querySelector(".radio-service__item-active");
+            const thisSettings = activeInput.textContent.trim();
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            isSearch = true;
+            let searchText = serviceSearchInput.value;
+            renderCards(thisSettings, searchText);
+        }));
+        const spollerTitle = document.querySelector(".spollers__title");
+        const spollerBody = document.querySelector(".spollers__body");
+        const radioButtons = document.querySelectorAll(".radio-service__item");
+        radioButtons.forEach((radioButton => radioButton.addEventListener("click", (e => {
+            isSearch = false;
             e.preventDefault();
             e.stopImmediatePropagation();
             const inputValue = document.querySelector(".search-serivce__input").value;

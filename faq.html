@@ -75,13 +75,13 @@
 						</a>
 						<li class="breadcrumbs__item"><a href="./index.html" class="breadcrumbs__link breadcrumbs__link-more">Главная</a>
 						</li>
-						<li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link breadcrumbs__link-active">Все
-								услуги</a></li>
+						<li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link breadcrumbs__link-active">FAQ
+							</a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="service__container">
-				<h1 class="service__title">Все услуги</h1>
+				<h1 class="service__title">FAQ</h1>
 				<div class="service__cards">
 					<form class="service__search search-serivce">
 						<input type="text" class="search-serivce__input" placeholder="Начните вводить слово" required>
@@ -165,7 +165,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="service__content">
+					<div class="faq__content">
+						<div data-spollers class="faq-spoller-content">
+
+						</div>
 					</div>
 				</div>
 			</div>
@@ -180,7 +183,7 @@
 							консультацию<p class="ellipse"></p></a>
 					</div>
 					<div class="request__image">
-						<picture><source srcset="img/service-bottom.webp" type="image/webp"><img src="img/service-bottom.png" alt=""></picture>
+						<picture><source srcset="img/tire.webp" type="image/webp"><img src="img/tire.png" alt=""></picture>
 					</div>
 				</div>
 			</div>
@@ -230,16 +233,20 @@
 			</div>
 		</footer>
 		<template class="card-template">
-			<div class="business__card card">
-				<div class="arrow-shape"></div>
-				<div class="card__links">
-					<p class="card__link card__link-angle"></p>
-					<p class="card__link card__link-center"></p>
+			<div class="faq__card card-faq">
+				<div class="spollers__item faq-spoller__item">
+					<div class="card__links">
+						<p class="card__link card__link-angle"></p>
+						<p class="card__link card__link-center"></p>
+					</div>
+					<button type="button" data-spoller class="spollers__title spollers__title-active faq-spoller__title">Привет
+					</button>
+					<div class="spollers__body faq-spoller__body">
+						<div class="faq-spoller__body-body">
+							Здарова
+						</div>
+					</div>
 				</div>
-				<div class="business__image">
-					<picture><source srcset="img/" type="image/webp"><img class="card-img" src="img/" alt=""></picture>
-				</div>
-				<p class="business__description"></p>
 			</div>
 		</template>
 	</div>
