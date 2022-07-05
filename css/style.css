@@ -1045,6 +1045,7 @@ body::after {
 .ip__image img,
 .ip__image picture {
   max-width: 80%;
+  max-width: 100%;
 }
 
 .text-ip__title {
@@ -1633,6 +1634,7 @@ body::after {
 }
 .card-case .card-case-img {
   padding: 1.25rem !important;
+  padding: 0.9375rem !important;
   max-width: 100% !important;
 }
 .card-case__left {
