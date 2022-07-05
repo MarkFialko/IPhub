@@ -3837,7 +3837,6 @@
                 modules: [ Navigation ],
                 observer: true,
                 observeParents: true,
-                autoHeight: true,
                 speed: 800,
                 slidesPerView: 1,
                 spaceBetween: 30,
@@ -3979,15 +3978,6 @@
     checkLabel.addEventListener("keydown", (e => {
         const checkbox = document.querySelector(".popup-checkbox");
         if ("Enter" === e.key) checkbox.checked = !checkbox.checked;
-        e.preventDefault();
-    }));
-    script_form.forEach((input => {
-        input.addEventListener("onsubmit", (e => {
-            e.preventDefault();
-        }));
-        input.addEventListener("submit", (e => {
-            e.preventDefault();
-        }));
     }));
     const requiredForm = script_form.filter((input => input.closest("[required]")));
     const showInputError = reqInput => {
@@ -4042,24 +4032,9 @@
             let pastedText = pasted.getData("Text");
             if (!/\D/g.test(pastedText)) input.value = inputNumbersValue;
         }
-    function CreatePhone(phone) {
-        let newPhone = "";
-        for (let i = 0; i < phone.length; i++) {
-            newPhone += phone[i];
-            if (0 === i || 3 === i || 6 === i || 8 === i) newPhone += "-";
-        }
-        return newPhone;
     }
     requiredForm.forEach((reqInput => {
         reqInput.addEventListener("input", (e => {
-            if ("true" === reqInput.dataset.phone) if (reqInput.validity.valid) {
-                reqInput.attributes.maxlength.value = 15;
-                reqInput.value = CreatePhone(reqInput.value.toString());
-                reqInput.attributes.pattern.value = "[0-9]{1}-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}";
-            } else {
-                reqInput.attributes.maxlength.value = 11;
-                reqInput.attributes.pattern.value = "[0-9]{1}[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}";
-            }
             if (!reqInput.validity.valid) showInputError(reqInput); else hideInputError(reqInput);
             e.preventDefault();
         }));
@@ -4074,7 +4049,6 @@
             const checkbox = input.querySelector(".form-know__checkbox");
             checkbox.checked = !checkbox.checked;
             input.classList.toggle("form-know__group-checked");
-            e.preventDefault();
         }));
     }));
     const serviceContentList = document.querySelector(".service__content");
