@@ -511,7 +511,7 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 21.25rem;
+  max-width: 21.25rem !important;
 }
 
 .spollers {
