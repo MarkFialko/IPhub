@@ -14,6 +14,77 @@
             document.documentElement.classList.add(className);
         }));
     }
+    let _slideUp = (target, duration = 500, showmore = 0) => {
+        target.parentNode.querySelector(".spollers__title").classList.remove("_spoller-active");
+        if (!target.classList.contains("_slide")) {
+            target.classList.add("_slide");
+            target.style.transitionProperty = "height, margin, padding";
+            target.style.transitionDuration = duration + "ms";
+            target.style.height = `${target.offsetHeight}px`;
+            target.offsetHeight;
+            target.style.overflow = "hidden";
+            target.style.height = showmore ? `${showmore}px` : `0px`;
+            target.style.paddingTop = 0;
+            target.style.paddingBottom = 0;
+            target.style.marginTop = 0;
+            target.style.marginBottom = 0;
+            window.setTimeout((() => {
+                target.hidden = !showmore ? true : false;
+                !showmore ? target.style.removeProperty("height") : null;
+                target.style.removeProperty("padding-top");
+                target.style.removeProperty("padding-bottom");
+                target.style.removeProperty("margin-top");
+                target.style.removeProperty("margin-bottom");
+                !showmore ? target.style.removeProperty("overflow") : null;
+                target.style.removeProperty("transition-duration");
+                target.style.removeProperty("transition-property");
+                target.classList.remove("_slide");
+                document.dispatchEvent(new CustomEvent("slideUpDone", {
+                    detail: {
+                        target
+                    }
+                }));
+            }), duration);
+        }
+    };
+    let _slideDown = (target, duration = 500, showmore = 0) => {
+        target.parentNode.querySelector(".spollers__title").classList.add("_spoller-active");
+        if (!target.classList.contains("_slide")) {
+            target.classList.add("_slide");
+            target.hidden = target.hidden ? false : null;
+            showmore ? target.style.removeProperty("height") : null;
+            let height = target.offsetHeight;
+            target.style.overflow = "hidden";
+            target.style.height = showmore ? `${showmore}px` : `0px`;
+            target.style.paddingTop = 0;
+            target.style.paddingBottom = 0;
+            target.style.marginTop = 0;
+            target.style.marginBottom = 0;
+            target.offsetHeight;
+            target.style.transitionProperty = "height, margin, padding";
+            target.style.transitionDuration = duration + "ms";
+            target.style.height = height + "px";
+            target.style.removeProperty("padding-top");
+            target.style.removeProperty("padding-bottom");
+            target.style.removeProperty("margin-top");
+            target.style.removeProperty("margin-bottom");
+            window.setTimeout((() => {
+                target.style.removeProperty("height");
+                target.style.removeProperty("overflow");
+                target.style.removeProperty("transition-duration");
+                target.style.removeProperty("transition-property");
+                target.classList.remove("_slide");
+                document.dispatchEvent(new CustomEvent("slideDownDone", {
+                    detail: {
+                        target
+                    }
+                }));
+            }), duration);
+        }
+    };
+    let _slideToggle = (target, duration = 500) => {
+        if (target.hidden) return _slideDown(target, duration); else return _slideUp(target, duration);
+    };
     let bodyLockStatus = true;
     let bodyLockToggle = (delay = 500) => {
         if (document.documentElement.classList.contains("lock")) bodyUnlock(delay); else bodyLock(delay);
@@ -52,6 +123,86 @@
             }), delay);
         }
     };
+    function spollers() {
+        const spollersArray = document.querySelectorAll("[data-spollers]");
+        if (spollersArray.length > 0) {
+            const spollersRegular = Array.from(spollersArray).filter((function(item, index, self) {
+                return !item.dataset.spollers.split(",")[0];
+            }));
+            if (spollersRegular.length) initSpollers(spollersRegular);
+            let mdQueriesArray = dataMediaQueries(spollersArray, "spollers");
+            if (mdQueriesArray && mdQueriesArray.length) mdQueriesArray.forEach((mdQueriesItem => {
+                mdQueriesItem.matchMedia.addEventListener("change", (function() {
+                    initSpollers(mdQueriesItem.itemsArray, mdQueriesItem.matchMedia);
+                }));
+                initSpollers(mdQueriesItem.itemsArray, mdQueriesItem.matchMedia);
+            }));
+            function initSpollers(spollersArray, matchMedia = false) {
+                spollersArray.forEach((spollersBlock => {
+                    spollersBlock = matchMedia ? spollersBlock.item : spollersBlock;
+                    if (matchMedia.matches || !matchMedia) {
+                        spollersBlock.classList.add("_spoller-init");
+                        initSpollerBody(spollersBlock);
+                        spollersBlock.addEventListener("click", setSpollerAction);
+                    } else {
+                        spollersBlock.classList.remove("_spoller-init");
+                        initSpollerBody(spollersBlock, false);
+                        spollersBlock.removeEventListener("click", setSpollerAction);
+                    }
+                }));
+            }
+            function initSpollerBody(spollersBlock, hideSpollerBody = true) {
+                let spollerTitles = spollersBlock.querySelectorAll("[data-spoller]");
+                if (spollerTitles.length) {
+                    spollerTitles = Array.from(spollerTitles).filter((item => item.closest("[data-spollers]") === spollersBlock));
+                    spollerTitles.forEach((spollerTitle => {
+                        if (hideSpollerBody) {
+                            spollerTitle.removeAttribute("tabindex");
+                            if (!spollerTitle.classList.contains("_spoller-active")) spollerTitle.nextElementSibling.hidden = true;
+                        } else {
+                            spollerTitle.setAttribute("tabindex", "-1");
+                            spollerTitle.nextElementSibling.hidden = false;
+                        }
+                    }));
+                }
+            }
+            function setSpollerAction(e) {
+                const el = e.target;
+                if (el.closest("[data-spoller]")) {
+                    const spollerTitle = el.closest("[data-spoller]");
+                    const spollersBlock = spollerTitle.closest("[data-spollers]");
+                    const oneSpoller = spollersBlock.hasAttribute("data-one-spoller");
+                    const spollerSpeed = spollersBlock.dataset.spollersSpeed ? parseInt(spollersBlock.dataset.spollersSpeed) : 500;
+                    if (!spollersBlock.querySelectorAll("._slide").length) {
+                        if (oneSpoller && !spollerTitle.classList.contains("_spoller-active")) hideSpollersBody(spollersBlock);
+                        spollerTitle.classList.toggle("_spoller-active");
+                        _slideToggle(spollerTitle.nextElementSibling, spollerSpeed);
+                    }
+                    e.preventDefault();
+                }
+            }
+            function hideSpollersBody(spollersBlock) {
+                const spollerActiveTitle = spollersBlock.querySelector("[data-spoller]._spoller-active");
+                const spollerSpeed = spollersBlock.dataset.spollersSpeed ? parseInt(spollersBlock.dataset.spollersSpeed) : 500;
+                if (spollerActiveTitle && !spollersBlock.querySelectorAll("._slide").length) {
+                    spollerActiveTitle.classList.remove("_spoller-active");
+                    _slideUp(spollerActiveTitle.nextElementSibling, spollerSpeed);
+                }
+            }
+            const spollersClose = document.querySelectorAll("[data-spoller-close]");
+            if (spollersClose.length) document.addEventListener("click", (function(e) {
+                const el = e.target;
+                if (!el.closest("[data-spollers]")) spollersClose.forEach((spollerClose => {
+                    const spollersBlock = spollerClose.closest("[data-spollers]");
+                    const spollerSpeed = spollersBlock.dataset.spollersSpeed ? parseInt(spollersBlock.dataset.spollersSpeed) : 500;
+                    if (!spollersBlock.querySelectorAll("._slide").length) {
+                        spollerClose.classList.remove("_spoller-active");
+                        _slideUp(spollerClose.nextElementSibling, spollerSpeed);
+                    }
+                }));
+            }));
+        }
+    }
     function menuInit() {
         if (document.querySelector(".icon-menu")) document.addEventListener("click", (function(e) {
             if (bodyLockStatus && e.target.closest(".icon-menu")) {
@@ -64,6 +215,49 @@
         setTimeout((() => {
             if (window.FLS) console.log(message);
         }), 0);
+    }
+    function uniqArray(array) {
+        return array.filter((function(item, index, self) {
+            return self.indexOf(item) === index;
+        }));
+    }
+    function dataMediaQueries(array, dataSetValue) {
+        const media = Array.from(array).filter((function(item, index, self) {
+            if (item.dataset[dataSetValue]) return item.dataset[dataSetValue].split(",")[0];
+        }));
+        if (media.length) {
+            const breakpointsArray = [];
+            media.forEach((item => {
+                const params = item.dataset[dataSetValue];
+                const breakpoint = {};
+                const paramsArray = params.split(",");
+                breakpoint.value = paramsArray[0];
+                breakpoint.type = paramsArray[1] ? paramsArray[1].trim() : "max";
+                breakpoint.item = item;
+                breakpointsArray.push(breakpoint);
+            }));
+            let mdQueries = breakpointsArray.map((function(item) {
+                return "(" + item.type + "-width: " + item.value + "px)," + item.value + "," + item.type;
+            }));
+            mdQueries = uniqArray(mdQueries);
+            const mdQueriesArray = [];
+            if (mdQueries.length) {
+                mdQueries.forEach((breakpoint => {
+                    const paramsArray = breakpoint.split(",");
+                    const mediaBreakpoint = paramsArray[1];
+                    const mediaType = paramsArray[2];
+                    const matchMedia = window.matchMedia(paramsArray[0]);
+                    const itemsArray = breakpointsArray.filter((function(item) {
+                        if (item.value === mediaBreakpoint && item.type === mediaType) return true;
+                    }));
+                    mdQueriesArray.push({
+                        itemsArray,
+                        matchMedia
+                    });
+                }));
+                return mdQueriesArray;
+            }
+        }
     }
     class Popup {
         constructor(options) {
@@ -250,6 +444,8 @@
                 }
             };
             form.forEach((input => {
+                const checkbox = document.querySelector(".popup-checkbox");
+                if (checkbox) checkbox.checked = false;
                 input.value = "";
             }));
             requiredForm.forEach((reqInput => {
@@ -3557,9 +3753,9 @@
                         slidesPerView: 3,
                         spaceBetween: 20
                     },
-                    900: {
+                    1100: {
                         slidesPerView: 4,
-                        spaceBetween: 30
+                        spaceBetween: 20
                     }
                 },
                 on: {}
@@ -3581,12 +3777,8 @@
                         spaceBetween: 20,
                         autoHeight: true
                     },
-                    650: {
+                    975: {
                         slidesPerView: 2,
-                        spaceBetween: 20
-                    },
-                    1100: {
-                        slidesPerView: 3,
                         spaceBetween: 20
                     }
                 },
@@ -3660,6 +3852,23 @@
     window.addEventListener("load", (function(e) {
         initSliders();
     }));
+    const formKnowSlider = document.querySelector(".form-know__wrapper");
+    if (formKnowSlider) {
+        const counterSlider = document.querySelector(".form-know__all");
+        const countSlider = document.querySelector(".form-know__count");
+        countSlider.textContent = "1";
+        counterSlider.textContent = formKnowSlider.children.length;
+        const formKnowLeft = document.querySelector(".form-know__left");
+        const formKnowRight = document.querySelector(".form-know__right");
+        formKnowLeft.addEventListener("click", (e => {
+            e.preventDefault();
+            if (1 != countSlider.textContent) countSlider.textContent = parseInt(countSlider.textContent) - 1;
+        }));
+        formKnowRight.addEventListener("click", (e => {
+            e.preventDefault();
+            if (countSlider.textContent != formKnowSlider.children.length) countSlider.textContent = parseInt(countSlider.textContent) + 1;
+        }));
+    }
     let addWindowScrollEvent = false;
     setTimeout((() => {
         if (addWindowScrollEvent) {
@@ -3797,6 +4006,42 @@
             reqInput.classList.remove("input-error");
         }
     };
+    function getInputNumbersValue(input) {
+        return input.value.replace(/[^\+\d+$]/g, "");
+    }
+    function onPhoneInput(e) {
+        const input = e.target;
+        let inputNumbersValue = getInputNumbersValue(input);
+        let formattedInputValue = "";
+        let selectionStart = input.selectionStart;
+        if (!inputNumbersValue) return input.value = "";
+        if (input.value.length !== selectionStart) {
+            if (e.data && /\D/g.test(e.data)) input.value = inputNumbersValue;
+            return;
+        }
+        if ([ "7", "8", "+" ].includes(inputNumbersValue[0])) formattedInputValue = "+7 ("; else formattedInputValue = "+7 (" + inputNumbersValue;
+        if (inputNumbersValue.length > 1) formattedInputValue += inputNumbersValue.substring(2, 5);
+        if (inputNumbersValue.length > 4) formattedInputValue += ") ";
+        if (inputNumbersValue.length > 5) formattedInputValue += inputNumbersValue.substring(5, 8);
+        if (inputNumbersValue.length > 8) formattedInputValue += "-" + inputNumbersValue.substring(8, 10);
+        if (inputNumbersValue.length > 10) formattedInputValue += "-" + inputNumbersValue.substring(10, 12);
+        input.value = formattedInputValue;
+    }
+    function onPhoneKeyDown(e) {
+        const input = e.target;
+        if ("Backspace" === e.key) {
+            if (9 === input.value.length) input.value = input.value.substring(0, input.value.length - 2);
+            if (4 === input.value.length) input.value = input.value.substring(0, input.value.length - 3);
+        }
+    }
+    function onPhonePaste(e) {
+        let pasted = e.clipboardData;
+        const input = e.target;
+        let inputNumbersValue = getInputNumbersValue(input);
+        if (pasted) {
+            let pastedText = pasted.getData("Text");
+            if (!/\D/g.test(pastedText)) input.value = inputNumbersValue;
+        }
     function CreatePhone(phone) {
         let newPhone = "";
         for (let i = 0; i < phone.length; i++) {
@@ -3819,6 +4064,10 @@
             e.preventDefault();
         }));
     }));
+    const phoneInput = document.querySelector("[data-phone]");
+    phoneInput.addEventListener("input", onPhoneInput);
+    phoneInput.addEventListener("keydown", onPhoneKeyDown);
+    phoneInput.addEventListener("paste", onPhonePaste);
     const knowForm = Array.from(document.querySelectorAll(".form-know__group"));
     knowForm.forEach((input => {
         input.addEventListener("click", (e => {
@@ -3828,7 +4077,415 @@
             e.preventDefault();
         }));
     }));
+    const serviceContentList = document.querySelector(".service__content");
+    if (serviceContentList) {
+        const serviceCardsList = [ {
+            links: [ "Товарные знаки", "Дизайн" ],
+            img: "s1.svg",
+            description: "Регистрация товарного знака"
+        }, {
+            links: [ "IT", "Защита" ],
+            img: "s2.svg",
+            description: "Международная регистрация"
+        }, {
+            links: [ "Управление", "Обучение" ],
+            img: "s3.svg",
+            description: "Изменение сведений в товарном знаке"
+        }, {
+            links: [ "Патенты", "Дизайн" ],
+            img: "s4.svg",
+            description: "Получение дубликата свидетельства"
+        }, {
+            links: [ "Защита", "Управление" ],
+            img: "s10.svg",
+            description: "Ответ на уведомление"
+        }, {
+            links: [ "Обучение", "Дизайн" ],
+            img: "s11.svg",
+            description: "Внесение знака реестр ФТС "
+        }, {
+            links: [ "IT", "Управление" ],
+            img: "s12.svg",
+            description: "Регистрация товарного знака"
+        }, {
+            links: [ "Управление", "Защита" ],
+            img: "s13.svg",
+            description: "Внесение знака реестр ФТС "
+        }, {
+            links: [ "Защита", "Патенты" ],
+            img: "s14.svg",
+            description: "Международная регистрация"
+        }, {
+            links: [ "Обучение", "Управление" ],
+            img: "s15.svg",
+            description: "Получение дубликата свидетельства"
+        }, {
+            links: [ "IT", "Товарные знаки" ],
+            img: "s16.svg",
+            description: "Регистрация товарного знака"
+        }, {
+            links: [ "Обучение", "Дизайн" ],
+            img: "s17.svg",
+            description: "Получение дубликата свидетельства"
+        }, {
+            links: [ "Патенты", "Товарные знаки" ],
+            img: "s18.svg",
+            description: "Получение дубликата свидетельства"
+        }, {
+            links: [ "IT", "Патенты" ],
+            img: "s19.svg",
+            description: "Получение дубликата свидетельства"
+        }, {
+            links: [ "Защита", "Товарные знаки" ],
+            img: "s19.svg",
+            description: "Получение дубликата свидетельства"
+        } ];
+        class Card {
+            constructor(data, selector) {
+                this.links = data.links;
+                this._img = data.img;
+                this._description = data.description;
+                this._selector = selector;
+            }
+            _getTemplate() {
+                const cardElement = document.querySelector(`.${this._selector}`).content.querySelector(".card").cloneNode(true);
+                return cardElement;
+            }
+            generateCard() {
+                this._element = this._getTemplate();
+                this._element.querySelector(".card__link-angle").textContent = this.links[0];
+                this._element.querySelector(".card__link-center").textContent = this.links[1];
+                this._element.querySelector(".card-img").src += this._img;
+                this._element.querySelector(".business__description").textContent = this._description;
+                return this._element;
+            }
+        }
+        function checkValidityCard(card, settings) {
+            for (let i = 0; i < 2; i++) if (card.links[i] === settings) return true;
+            return false;
+        }
+        function checkValidityName(card, name) {
+            if (card.description.includes(name)) return true;
+            return false;
+        }
+        let isSearch = false;
+        function renderCards(settings = null, name = null) {
+            serviceContentList.innerHTML = "";
+            let renderSerivceList = serviceCardsList;
+            if (settings) if ("Все услуги" !== settings) renderSerivceList = serviceCardsList.filter((card => checkValidityCard(card, settings)));
+            if (name && isSearch) {
+                name = name.trim();
+                renderSerivceList = renderSerivceList.filter((card => checkValidityName(card, name)));
+            }
+            renderSerivceList.forEach((cardElement => {
+                const card = new Card(cardElement, "card-template").generateCard();
+                serviceContentList.append(card);
+            }));
+            if (0 === serviceContentList.children.length) serviceContentList.innerHTML = `\n         <p class="service__error">Данная услуга отсутствует</p>\n         `;
+        }
+        renderCards();
+        const serviceSearchInput = document.querySelector(".search-serivce__input");
+        const serviceSearchButton = document.querySelector(".search__link");
+        serviceSearchButton.addEventListener("click", (e => {
+            const activeInput = document.querySelector(".radio-service__item-active");
+            const thisSettings = activeInput.textContent.trim();
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            isSearch = true;
+            let searchText = serviceSearchInput.value;
+            renderCards(thisSettings, searchText);
+        }));
+        const spollerTitle = document.querySelector(".spollers__title");
+        const spollerBody = document.querySelector(".spollers__body");
+        const radioButtons = document.querySelectorAll(".radio-service__item");
+        radioButtons.forEach((radioButton => radioButton.addEventListener("click", (e => {
+            isSearch = false;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const inputValue = document.querySelector(".search-serivce__input").value;
+            const value = e.currentTarget.querySelector("label").textContent;
+            spollerTitle.textContent = value;
+            _slideUp(spollerBody);
+            const input = radioButton.children[0];
+            input.checked = !input.checked;
+            if (input.checked) {
+                radioButton.classList.add("radio-service__item-active");
+                renderCards(value, inputValue);
+            } else {
+                radioButton.classList.remove("radio-service__item-active");
+                renderCards(null, inputValue);
+            }
+            radioButtons.forEach((otherButton => {
+                const input = otherButton.children[0];
+                if (input.checked) ; else otherButton.classList.remove("radio-service__item-active");
+            }));
+        }))));
+    }
+    const caseContentList = document.querySelector(".case-case__content");
+    if (caseContentList) {
+        const serviceCardsList = [ {
+            links: [ "Товарные знаки", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Как в результате защиты мы зарегистрировали бренд российской косметики при наличии оснований для отказа"
+        }, {
+            links: [ "Управление", "Патенты" ],
+            img: "sl2.png",
+            title: "Camera IQ — производитель систем машинного зрения",
+            description: "Предварительный отказ — не приговор! Как мы защищали монополию российского производителя строительных материалов"
+        }, {
+            links: [ "Защита", "IT" ],
+            img: "sl3.png",
+            title: "HANDS — производитель строительных материалов",
+            description: "Защита прав после ребрендинга. Как провести успешную регистрацию"
+        }, {
+            links: [ "Обучение", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Как в результате защиты мы зарегистрировали бренд российской косметики при наличии оснований для отказа"
+        }, {
+            links: [ "Товарные знаки", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Предварительный отказ — не приговор! Как мы защищали монополию российского производителя строительных материалов"
+        }, {
+            links: [ "Управление", "Патенты" ],
+            img: "sl2.png",
+            title: "Camera IQ — производитель систем машинного зрения",
+            description: "Защита прав после ребрендинга. Как провести успешную регистрацию"
+        }, {
+            links: [ "Защита", "IT" ],
+            img: "sl3.png",
+            title: "HANDS — производитель строительных материалов",
+            description: "Как в результате защиты мы зарегистрировали бренд российской косметики при наличии оснований для отказа"
+        }, {
+            links: [ "Обучение", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Предварительный отказ — не приговор! Как мы защищали монополию российского производителя строительных материалов"
+        }, {
+            links: [ "Товарные знаки", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Защита прав после ребрендинга. Как провести успешную регистрацию"
+        }, {
+            links: [ "Управление", "Патенты" ],
+            img: "sl2.png",
+            title: "Camera IQ — производитель систем машинного зрения",
+            description: "Как в результате защиты мы зарегистрировали бренд российской косметики при наличии оснований для отказа"
+        }, {
+            links: [ "Защита", "IT" ],
+            img: "sl3.png",
+            title: "HANDS — производитель строительных материалов",
+            description: "Предварительный отказ — не приговор! Как мы защищали монополию российского производителя строительных материалов"
+        }, {
+            links: [ "Обучение", "Дизайн" ],
+            img: "sl1.png",
+            title: "CIRKLE — производитель косметической продукции",
+            description: "Защита прав после ребрендинга. Как провести успешную регистрацию"
+        } ];
+        class CardCase {
+            constructor(data, selector) {
+                this.links = data.links;
+                this._img = data.img;
+                this._description = data.description;
+                this._title = data.title;
+                this._selector = selector;
+            }
+            _getTemplate() {
+                const cardElement = document.querySelector(`.${this._selector}`).content.querySelector(".card-case").cloneNode(true);
+                return cardElement;
+            }
+            generateCard() {
+                this._element = this._getTemplate();
+                this._element.querySelector(".card__link-angle").textContent = this.links[0];
+                this._element.querySelector(".card__link-center").textContent = this.links[1];
+                this._element.querySelector(".card-case-img").src += this._img;
+                this._element.querySelector(".card-case__title").textContent = this._title;
+                this._element.querySelector(".card-case__subtitle").textContent = this._description;
+                return this._element;
+            }
+        }
+        function checkValidityCard(card, settings) {
+            for (let i = 0; i < 2; i++) if (card.links[i] === settings) return true;
+            return false;
+        }
+        function checkValidityName(card, name) {
+            if (card.description.includes(name) || card.title.includes(name)) return true;
+            return false;
+        }
+        let isSearch = false;
+        function renderCards(settings = null, name = null) {
+            caseContentList.innerHTML = "";
+            let renderSerivceList = serviceCardsList;
+            if (settings) if ("Все услуги" !== settings) renderSerivceList = serviceCardsList.filter((card => checkValidityCard(card, settings)));
+            if (name && isSearch) {
+                name = name.trim();
+                renderSerivceList = renderSerivceList.filter((card => checkValidityName(card, name)));
+            }
+            renderSerivceList.forEach((cardElement => {
+                const card = new CardCase(cardElement, "card-template").generateCard();
+                caseContentList.append(card);
+            }));
+            if (0 === caseContentList.children.length) caseContentList.innerHTML = `\n         <p class="service__error">Данная услуга отсутствует</p>\n         `;
+        }
+        renderCards();
+        const serviceSearchInput = document.querySelector(".search-serivce__input");
+        const serviceSearchButton = document.querySelector(".search__link");
+        serviceSearchButton.addEventListener("click", (e => {
+            const activeInput = document.querySelector(".radio-service__item-active");
+            const thisSettings = activeInput.textContent.trim();
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            isSearch = true;
+            let searchText = serviceSearchInput.value;
+            renderCards(thisSettings, searchText);
+        }));
+        const spollerTitle = document.querySelector(".spollers__title");
+        const spollerBody = document.querySelector(".spollers__body");
+        const radioButtons = document.querySelectorAll(".radio-service__item");
+        radioButtons.forEach((radioButton => radioButton.addEventListener("click", (e => {
+            isSearch = false;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const inputValue = document.querySelector(".search-serivce__input").value;
+            const value = e.currentTarget.querySelector("label").textContent;
+            spollerTitle.textContent = value;
+            _slideUp(spollerBody);
+            const input = radioButton.children[0];
+            input.checked = !input.checked;
+            if (input.checked) {
+                radioButton.classList.add("radio-service__item-active");
+                renderCards(value, inputValue);
+            } else {
+                radioButton.classList.remove("radio-service__item-active");
+                renderCards(null, inputValue);
+            }
+            radioButtons.forEach((otherButton => {
+                const input = otherButton.children[0];
+                if (input.checked) ; else otherButton.classList.remove("radio-service__item-active");
+            }));
+        }))));
+    }
+    const faqContentList = document.querySelector(".faq-spoller-content");
+    if (faqContentList) {
+        const serviceCardsList = [ {
+            links: [ "Обучение", "Дизайн" ],
+            title: "Что такое патент и что он дает?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Защита", "IT" ],
+            title: "Чем подтверждается факт поступления заявки в Роспатент?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Товарные знаки", "Обучение" ],
+            title: "Какие документы необходимо представить?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Патенты", "Защита" ],
+            title: "Каков порядок рассмотрения заявки на выдачу патента на изобретение?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Товарные знаки", "Патенты" ],
+            title: "Можно ли продлить срок действия исключительного права?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Обучение", "Управление" ],
+            title: "Кто может подать заявку?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        }, {
+            links: [ "Защита", "Патенты" ],
+            title: "Чем подтверждается факт поступления заявки в Роспатент?",
+            description: "Патент — это охранный документ, предоставляющий вам исключительное право на определённый результат интеллектуальной деятельности (изобретение, полезную модель, промышленный образец). Иными словами, патент — это гарантия вашей временной монополии на производство, распространение и сбыт определённого продукта (устройства, вещества, штамма микроорганизмов и т.д.), в том числе характеризующегося только оригинальным внешним видом, реализацию описанного в патенте способа выполнения того или иного действия (технологию). В обмен на предоставление вам такого исключительного права вы публично раскрываете в описании патента всю информацию о вашем продукте или технологии."
+        } ];
+        class CardFaq {
+            constructor(data, selector) {
+                this.links = data.links;
+                this._description = data.description;
+                this._title = data.title;
+                this._selector = selector;
+            }
+            _getTemplate() {
+                const cardElement = document.querySelector(`.${this._selector}`).content.querySelector(".card-faq").cloneNode(true);
+                return cardElement;
+            }
+            generateCard() {
+                this._element = this._getTemplate();
+                this._element.querySelector(".card__link-angle").textContent = this.links[0];
+                this._element.querySelector(".card__link-center").textContent = this.links[1];
+                this._element.querySelector(".faq-spoller__title").textContent = this._title;
+                this._element.addEventListener("click", (e => {
+                    e.preventDefault();
+                    _slideToggle(this._element.querySelector(".faq-spoller__body"), 500);
+                }));
+                _slideUp(this._element.querySelector(".faq-spoller__body"), 500);
+                this._element.querySelector(".faq-spoller__body-body").textContent = this._description;
+                return this._element;
+            }
+        }
+        function checkValidityCard(card, settings) {
+            for (let i = 0; i < 2; i++) if (card.links[i] === settings) return true;
+            return false;
+        }
+        function checkValidityName(card, name) {
+            if (card.description.includes(name) || card.title.includes(name)) return true;
+            return false;
+        }
+        let isSearch = false;
+        function renderCards(settings = null, name = null) {
+            faqContentList.innerHTML = "";
+            let renderSerivceList = serviceCardsList;
+            if (settings) if ("Все услуги" !== settings) renderSerivceList = serviceCardsList.filter((card => checkValidityCard(card, settings)));
+            if (name && isSearch) {
+                name = name.trim();
+                renderSerivceList = renderSerivceList.filter((card => checkValidityName(card, name)));
+            }
+            renderSerivceList.forEach((cardElement => {
+                const card = new CardFaq(cardElement, "card-template").generateCard();
+                faqContentList.append(card);
+            }));
+            if (0 === faqContentList.children.length) faqContentList.innerHTML = `\n         <p class="service__error">Данная услуга отсутствует</p>\n         `;
+        }
+        renderCards();
+        const serviceSearchInput = document.querySelector(".search-serivce__input");
+        const serviceSearchButton = document.querySelector(".search__link");
+        serviceSearchButton.addEventListener("click", (e => {
+            const activeInput = document.querySelector(".radio-service__item-active");
+            const thisSettings = activeInput.textContent.trim();
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            isSearch = true;
+            let searchText = serviceSearchInput.value;
+            renderCards(thisSettings, searchText);
+        }));
+        const spollerTitle = document.querySelector(".spollers__title");
+        const spollerBody = document.querySelector(".spollers__body");
+        const radioButtons = document.querySelectorAll(".radio-service__item");
+        radioButtons.forEach((radioButton => radioButton.addEventListener("click", (e => {
+            isSearch = false;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const inputValue = document.querySelector(".search-serivce__input").value;
+            const value = e.currentTarget.querySelector("label").textContent;
+            spollerTitle.textContent = value;
+            _slideUp(spollerBody);
+            const input = radioButton.children[0];
+            input.checked = !input.checked;
+            if (input.checked) {
+                radioButton.classList.add("radio-service__item-active");
+                renderCards(value, inputValue);
+            } else {
+                radioButton.classList.remove("radio-service__item-active");
+                renderCards(null, inputValue);
+            }
+            radioButtons.forEach((otherButton => {
+                const input = otherButton.children[0];
+                if (input.checked) ; else otherButton.classList.remove("radio-service__item-active");
+            }));
+        }))));
+    }
     window["FLS"] = true;
     isWebp();
     menuInit();
+    spollers();
 })();
