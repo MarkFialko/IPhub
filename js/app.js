@@ -4046,7 +4046,9 @@
     const knowForm = Array.from(document.querySelectorAll(".form-know__group"));
     knowForm.forEach((input => {
         input.addEventListener("click", (e => {
+            e.preventDefault();
             const checkbox = input.querySelector(".form-know__checkbox");
+            console.log("checkbox", checkbox);
             checkbox.checked = !checkbox.checked;
             input.classList.toggle("form-know__group-checked");
         }));
